@@ -44,6 +44,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    transform: scale(1.2);
+  }
+
+  .congratsText {
+    color: #a28354;
+    font-size: 28px;
   }
   
+  .App {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5%;
+    margin-left: 5%;
+  }

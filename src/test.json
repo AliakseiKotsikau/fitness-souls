@@ -1,0 +1,31 @@
+{
+    "world":{"enemy":"World","deathNumber":29},
+    "bosses": [
+        {"enemy":"Asylum Demon","deathNumber":0},
+        {"enemy":"Taurus Demon","deathNumber":3},
+        {"enemy":"Belfry Gargoyles","deathNumber":5},
+        {"enemy":"Moonlight Butterfly","deathNumber":1},
+        {"enemy":"Capra Demon","deathNumber":0},
+        {"enemy":"Gaping Dragon","deathNumber":0},
+        {"enemy":"Quelaag","deathNumber":0},
+        {"enemy":"Iron Golem","deathNumber":0},
+        {"enemy":"Stray Demon","deathNumber":0},
+        {"enemy":"Priscilla","deathNumber":0},
+        {"enemy":"Ornstein & Smough","deathNumber":0},
+        {"enemy":"Gwyndolin","deathNumber":0},
+        {"enemy":"Sif","deathNumber":0},
+        {"enemy":"Four Kings","deathNumber":0},
+        {"enemy":"Pinwheel","deathNumber":0},
+        {"enemy":"Gravelord Nito","deathNumber":0},
+        {"enemy":"Seath the Scaleless","deathNumber":0},
+        {"enemy":"Ceaseless Discharge","deathNumber":0},
+        {"enemy":"Firesage Demon","deathNumber":0},
+        {"enemy":"Centipede Demon","deathNumber":0},
+        {"enemy":"Bed of Chaos","deathNumber":0},
+        {"enemy":"Sanctuary Guardian","deathNumber":0},
+        {"enemy":"Artorias","deathNumber":0},
+        {"enemy":"Manus","deathNumber":0},
+        {"enemy":"Kalameet","deathNumber":0},
+        {"enemy":"Gwyn","deathNumber":0}
+    ]
+}
