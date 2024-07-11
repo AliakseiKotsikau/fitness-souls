@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Wheel } from 'react-custom-roulette'
 import arrayShuffle from 'array-shuffle';
 import ExerciseStack from './ExercisesStack';
@@ -38,6 +38,15 @@ export default function ExerciseWheel() {
     setExercises(exercises);
   }
 
+  function onExistingExerciseClick() {
+    exercises.pop();
+    setExercises(exercises);
+  }
+
+  useEffect( () => {
+    onExistingExerciseClick();
+  }, [exercises])
+
   return (
     <>
       <div className="wheelContainer">
@@ -63,7 +72,7 @@ export default function ExerciseWheel() {
           <div className="marker" />
         </div>
         <div className='exerciesStackContainer'>
-          <ExerciseStack exercises={exercises} />
+          <ExerciseStack exercises={[...exercises].reverse()} onExerciseItemClick={onExistingExerciseClick}/>
         </div>
       </div>
     </>

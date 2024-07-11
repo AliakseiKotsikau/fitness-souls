@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
 
@@ -14,6 +14,9 @@ const ColorButton = styled(Button)(({ theme }) => ({
     fontSize: '20px'
   }));
 
-export default function ExerciseItem({text}) {
-    return (<ColorButton variant="contained" color="inherit">{text}</ColorButton>)
+export default function ExerciseItem({text, onExerciseItemClick}) {
+    return (
+    <ColorButton variant="contained" color="inherit" onClick={onExerciseItemClick}>
+    {text}
+    </ColorButton>)
 }
