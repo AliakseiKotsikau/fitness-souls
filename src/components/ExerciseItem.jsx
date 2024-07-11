@@ -11,7 +11,8 @@ const ColorButton = styled(Button)(({ theme }) => ({
     },
     width: '250px',
     height: '50px',
-    fontSize: '20px'
+    fontSize: '20px',
+    fontWeight: 'bold'
   }));
 
 export default function ExerciseItem({text, onExerciseItemClick}) {

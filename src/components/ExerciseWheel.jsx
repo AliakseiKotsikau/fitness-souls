@@ -39,7 +39,7 @@ export default function ExerciseWheel() {
   }
 
   function onExistingExerciseClick() {
-    exercises.pop();
+    exercises.shift();
     setExercises([...exercises]);
   }
 
