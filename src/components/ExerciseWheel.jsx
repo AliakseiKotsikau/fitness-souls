@@ -40,12 +40,8 @@ export default function ExerciseWheel() {
 
   function onExistingExerciseClick() {
     exercises.pop();
-    setExercises(exercises);
+    setExercises([...exercises]);
   }
-
-  useEffect( () => {
-    onExistingExerciseClick();
-  }, [exercises])
 
   return (
     <>
