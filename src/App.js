@@ -1,11 +1,11 @@
-import Chart from "./Chart";
+import Chart from "./components/Chart";
 import "./styles.css";
-import Wheel from './Wheel';
+import ExerciseWheel from './components/ExerciseWheel';
 
 function App() {
   return (
     <div className="App">
-        <Wheel/>
+        <ExerciseWheel/>
         <Chart/>
     </div>
   );

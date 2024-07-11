@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
-import file from './test.json'
+import file from '../data/dark-souls.json'
 
 export default function Chart() {
   return (
@@ -31,8 +31,8 @@ export default function Chart() {
         }
       }]}
       series={[{ dataKey: 'deathNumber' }]}
-      width={700}
-      height={700}
+      width={600}
+      height={600}
       layout='horizontal'
       dataset={file.bosses}
       barLabel="value"

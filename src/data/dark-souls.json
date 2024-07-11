@@ -1,11 +1,11 @@
 {
     "world":{"enemy":"World","deathNumber":29},
     "bosses": [
-        {"enemy":"Asylum Demon","deathNumber":0},
-        {"enemy":"Taurus Demon","deathNumber":3},
-        {"enemy":"Belfry Gargoyles","deathNumber":5},
-        {"enemy":"Moonlight Butterfly","deathNumber":1},
-        {"enemy":"Capra Demon","deathNumber":0},
+        {"enemy":"Asylum Demon","deathNumber": 0},
+        {"enemy":"Taurus Demon","deathNumber": 3},
+        {"enemy":"Belfry Gargoyles","deathNumber": 5},
+        {"enemy":"Moonlight Butterfly","deathNumber": 1},
+        {"enemy":"Capra Demon","deathNumber": 0},
         {"enemy":"Gaping Dragon","deathNumber":0},
         {"enemy":"Quelaag","deathNumber":0},
         {"enemy":"Iron Golem","deathNumber":0},
@@ -27,5 +27,10 @@
         {"enemy":"Manus","deathNumber":0},
         {"enemy":"Kalameet","deathNumber":0},
         {"enemy":"Gwyn","deathNumber":0}
+    ],
+    "exercises" : [
+        {"push-ups" : 140},
+        {"squats" : 130},
+        {"crunches" : 110}
     ]
 }
