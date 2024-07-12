@@ -1,6 +1,6 @@
-import Chart from "./components/Chart";
+import Chart from "./components/chart/Chart";
+import ExerciseWheel from './components/exerciseWheel/ExerciseWheel';
 import "./styles.css";
-import ExerciseWheel from './components/ExerciseWheel';
 
 function App() {
   return (

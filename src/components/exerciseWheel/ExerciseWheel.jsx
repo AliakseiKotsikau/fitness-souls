@@ -1,32 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Wheel } from 'react-custom-roulette'
-import arrayShuffle from 'array-shuffle';
-import ExerciseStack from './ExercisesStack';
+import arrayShuffle from 'array-shuffle'
+import ExerciseStack from './../exerciseStack/ExercisesStack'
+import exercisesArray from '../../data/exercises'
 
-const data = [
-  { option: '10 push-ups', optionSize: 3 },
-  { option: '10 squats', optionSize: 3 },
-  { option: '10 crunches', optionSize: 3 },
-  { option: '20 push-ups', optionSize: 2 },
-  { option: '20 squats', optionSize: 2 },
-  { option: '20 crunches', optionSize: 2 },
-  { option: '30 sec. plank', optionSize: 2 },
-  { option: '30 climbers', optionSize: 2 },
-  { option: '1 min plank', optionSize: 1 },
-  { option: '25 pushups', optionSize: 1 },
-]
-
-const shuffledData = arrayShuffle(data);
-
-export default function ExerciseWheel() {
+const ExerciseWheel = props => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [exercises, setExercises] = useState([]);
-
-
+  
+  const shuffledData = arrayShuffle(exercisesArray);
+  
   const handleSpinClick = () => {
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * data.length);
+      const newPrizeNumber = Math.floor(Math.random() * exercisesArray.length);
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
@@ -39,7 +26,7 @@ export default function ExerciseWheel() {
   }
 
   function onExistingExerciseClick() {
-    exercises.pop();
+    exercises.shift();
     setExercises([...exercises]);
   }
 
@@ -74,3 +61,5 @@ export default function ExerciseWheel() {
     </>
   )
 }
+
+export default ExerciseWheel
