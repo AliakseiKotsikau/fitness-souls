@@ -10,9 +10,8 @@ function App() {
 
     <div className="App">
       <ThemeProvider theme={DEFAULT_THEME}>
-        <ExerciseWheel/>
-        <Chart/> 
-        <StatsTabs/>
+        <ExerciseWheel />
+        <StatsTabs />
       </ThemeProvider>
     </div>
   );

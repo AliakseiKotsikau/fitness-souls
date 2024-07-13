@@ -26,6 +26,7 @@ const Chart = props => {
         })}
         yAxis={[{ scaleType: 'band', dataKey: 'enemy' }]}
         xAxis={[{
+          tickMinStep: 1,
           colorMap: {
             type: 'continuous',
             min: 3,
@@ -34,8 +35,8 @@ const Chart = props => {
           }
         }]}
         series={[{ dataKey: 'deathNumber' }]}
-        width={900}
-        height={700}
+        width={1100}
+        height={800}
         layout='horizontal'
         dataset={file}
         barLabel="value"
