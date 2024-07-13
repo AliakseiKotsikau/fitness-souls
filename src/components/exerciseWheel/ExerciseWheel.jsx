@@ -3,6 +3,7 @@ import { Wheel } from 'react-custom-roulette'
 import arrayShuffle from 'array-shuffle'
 import ExerciseStack from './../exerciseStack/ExercisesStack'
 import exercisesArray from '../../data/exercises'
+import { useTheme } from '@mui/material/styles';
 
 
 const shuffledData = arrayShuffle(exercisesArray);
@@ -11,6 +12,7 @@ const ExerciseWheel = props => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [exercises, setExercises] = useState([]);
+  const theme = useTheme();
   
   const handleSpinClick = () => {
     if (!mustSpin) {
@@ -41,13 +43,13 @@ const ExerciseWheel = props => {
             data={shuffledData}
             disableInitialAnimation={true}
             spinDuration={0.1}
-            backgroundColors={["#000"]}
-            textColors={["#ffffff"]}
+            backgroundColors={[theme.palette.common.black]}
+            textColors={[theme.palette.primary.main]}
             outerBorderWidth={3}
-            outerBorderColor={"#A28354"}
+            outerBorderColor={theme.palette.secondary.main}
             innerRadius={22}
             radiusLineWidth={2}
-            radiusLineColor={"#A28354"}
+            radiusLineColor={theme.palette.secondary.main}
             onStopSpinning={onStopSpin}
           />
           <button className="spinButton" onClick={handleSpinClick}>

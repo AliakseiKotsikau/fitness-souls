@@ -5,13 +5,14 @@ const DEFAULT_THEME = createTheme({
   palette: {
     text: {
       primary: '#FFFFFFF', 
-      secondary: '#a28354',
+      secondary: '#A28354',
     },
     primary: {
         main: '#FFFFFF'
     },
     secondary: {
-        main: '#a28354'
+        main: '#A28354',
+        light: '#cab28d'
     },
   },
 });

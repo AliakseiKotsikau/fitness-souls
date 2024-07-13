@@ -7,8 +7,8 @@ const ExerciseStack = props => {
 
     useEffect(() => {
         if (props.exercises) {
-            setExercises(props.exercises)   
-        } 
+            setExercises(props.exercises)
+        }
     })
 
     return (
@@ -23,7 +23,7 @@ const ExerciseStack = props => {
             })
             }
         </Stack>
-        )
+    )
 }
 
 export default ExerciseStack

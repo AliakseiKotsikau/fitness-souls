@@ -5,24 +5,24 @@ import './exerciseItem.css'
 
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  color: '#white',
-  backgroundColor: '#a28354',
+  color: theme.palette.primary.main,
+  backgroundColor: theme.palette.secondary.main,
 
   '&:hover': {
-    backgroundColor: '#cab28d',
+    backgroundColor: theme.palette.secondary.light,
   },
-  width: '250px',
-  height: '50px',
-  fontSize: '20px'
+  width: '20rem',
+  height: '4rem',
+  fontSize: '26px'
 }));
 
 const ExerciseItem = props => {
 
-    return (
-        <ColorButton className='exerciseItem' variant="contained" onClick={props.onExerciseItemClick}>
-          {props.text}
-        </ColorButton>
-    )
+  return (
+    <ColorButton className='exerciseItem' variant="contained" onClick={props.onExerciseItemClick}>
+      {props.text}
+    </ColorButton>
+  )
 }
 
 export default ExerciseItem 
