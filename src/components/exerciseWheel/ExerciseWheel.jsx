@@ -4,6 +4,7 @@ import arrayShuffle from 'array-shuffle'
 import ExerciseStack from './../exerciseStack/ExercisesStack'
 import exercisesArray from '../../data/exercises'
 import { useTheme } from '@mui/material/styles';
+import ExerciseLimitAlert from '../exerciseLimitAlert/ExerciseLimitAlert';
 
 
 const shuffledData = arrayShuffle(exercisesArray);
@@ -12,9 +13,17 @@ const ExerciseWheel = props => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [exercises, setExercises] = useState([]);
+  const [showMaxExercisesAlert, setShowMaxExercisesAlert] = useState(false);
+  const [limitOfExercisesReached, setLimitOfExercisesReached] = useState(false);
   const theme = useTheme();
-  
-  const handleSpinClick = () => {
+
+  function handleSpinClick() {
+    if (exercises.length == 3) {
+      setShowMaxExercisesAlert(true);
+      setLimitOfExercisesReached(true);
+      return;
+    }
+
     if (!mustSpin) {
       const newPrizeNumber = Math.floor(Math.random() * exercisesArray.length);
       setPrizeNumber(newPrizeNumber);
@@ -22,8 +31,13 @@ const ExerciseWheel = props => {
     }
   }
 
-  const onStopSpin = () => {
+  function onStopSpin() {
     setMustSpin(false);
+
+    if (limitOfExercisesReached) {
+      return;
+    }
+
     exercises.push(shuffledData[prizeNumber].option);
     setExercises(exercises);
   }
@@ -31,10 +45,23 @@ const ExerciseWheel = props => {
   function onExistingExerciseClick() {
     exercises.shift();
     setExercises([...exercises]);
+
+    if (exercises.length == 0) {
+      setLimitOfExercisesReached(false);
+    }
   }
+
+  useEffect(() => {
+    if (showMaxExercisesAlert) {
+      setTimeout(() => {
+        setShowMaxExercisesAlert(false);
+      }, 10000);
+    }
+  }, [showMaxExercisesAlert]);
 
   return (
     <>
+      {showMaxExercisesAlert ? <ExerciseLimitAlert onCloseAlert={() => { setShowMaxExercisesAlert(false) }} /> : <></>}
       <div className="wheelContainer">
         <div align="center" className="rouletteContainer">
           <Wheel
@@ -52,13 +79,13 @@ const ExerciseWheel = props => {
             radiusLineColor={theme.palette.secondary.main}
             onStopSpinning={onStopSpin}
           />
-          <button className="spinButton" onClick={handleSpinClick}>
+          <button className="spinButton" disabled={limitOfExercisesReached} onClick={handleSpinClick}>
             SPIN
           </button>
           <div className="marker" />
         </div>
         <div className='exerciesStackContainer'>
-          <ExerciseStack exercises={[...exercises].reverse()} onExerciseItemClick={onExistingExerciseClick}/>
+          <ExerciseStack exercises={[...exercises].reverse()} onExerciseItemClick={onExistingExerciseClick} />
         </div>
       </div>
     </>

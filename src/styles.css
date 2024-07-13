@@ -1,64 +1,64 @@
 body {
-    background-color: #000000;
-    color: white;
-    overflow: hidden;
-  }
-  
-  .spinButton {
-    position: relative;
-    top: -270px;
-    cursor: pointer;
-    border-radius: 9999px;
-    height: 6rem;
-    width: 6rem;
-    outline: inherit;
-    border: none;
-    padding: 0;
-    background-color: #a28354;
-    color: white;
-    font-weight: bold;
-    font-size: 1.5rem;
-  }
-  
-  .marker {
-    position: relative;
-    transform: rotate(0deg) !important;
-    top: -378px;
-    height: 0;
-    width: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid #a28354;
-    z-index: 10;
-  }
+  background-color: #000000;
+  color: white;
+  overflow: hidden;
+}
 
-  .rouletteContainer > div {
-    transform: rotate(-45deg);
-  }
+.spinButton {
+  position: relative;
+  top: -270px;
+  cursor: pointer;
+  border-radius: 9999px;
+  height: 6rem;
+  width: 6rem;
+  outline: inherit;
+  border: none;
+  padding: 0;
+  background-color: #a28354;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
 
-  .rouletteContainer {
-    transform: scale(1.2);
-  }
+.marker {
+  position: relative;
+  transform: rotate(0deg) !important;
+  top: -378px;
+  height: 0;
+  width: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #a28354;
+  z-index: 10;
+}
 
-  div img {
-    display: none;
-  }
+.rouletteContainer>div {
+  transform: rotate(-45deg);
+}
 
-  .wheelContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-left: 10rem;
-    margin-top: 5%;
-  }
-  
-  .App {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 10rem;
-  }
+.rouletteContainer {
+  transform: scale(1.2);
+}
 
-  .exerciesStackContainer {
-    margin-top: -15%;
-  }
+div img {
+  display: none;
+}
+
+.wheelContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10rem;
+  margin-top: 5%;
+}
+
+.App {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10rem;
+}
+
+.exerciesStackContainer {
+  margin-top: -15%;
+}

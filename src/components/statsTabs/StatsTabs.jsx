@@ -10,8 +10,7 @@ import Chart from '../chart/Chart';
 
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
-    padding: '0rem', whiteSpace:"pre"
-
+    padding: '0rem'
 }
 ));
 
@@ -22,7 +21,6 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 }
 ));
 
-
 const StatsTabs = props => {
     const [value, setValue] = React.useState(0);
 
@@ -31,29 +29,25 @@ const StatsTabs = props => {
     };
 
     return (
-        <Box sx={{typography: 'body1'}}>
-        <TabContext value={value}>
-            <Box sx={{ height: '2.9rem', width: '70rem', borderBottom: 3, borderColor: 'primary' }}>
-                <TabList
-                    value={value}
-                    onChange={handleChange}
-                    textColor="primary"
-                    indicatorColor="primary"
-                    variant='fullWidth'
-                >
-                    <StyledTab value={0} label="Statistics" />
-                    <StyledTab value={1} label="Bosses" />
-                </TabList>
-            </Box>
-            <StyledTabPanel value={0} textColor="primary">
-                Statistics tab{"\n"}
-                - Number of all deaths{"\n"}
-                - Next/current boss{"\n"}
-                - Exercise stats (cards?, table?, chart?){"\n"}
-
-            </StyledTabPanel>
-            <StyledTabPanel value={1} textColor="primary"><Chart/></StyledTabPanel>
-        </TabContext>
+        <Box sx={{ typography: 'body1' }}>
+            <TabContext value={value}>
+                <Box sx={{ height: '2.9rem', width: '70rem', borderBottom: 3, borderColor: 'primary' }}>
+                    <TabList
+                        value={value}
+                        onChange={handleChange}
+                        textColor="primary"
+                        indicatorColor="primary"
+                        variant='fullWidth'
+                    >
+                        <StyledTab value={0} label="Statistics" />
+                        <StyledTab value={1} label="Bosses" />
+                    </TabList>
+                </Box>
+                <StyledTabPanel value={0} textColor="primary">
+                    Statistics tab
+                </StyledTabPanel>
+                <StyledTabPanel value={1} textColor="primary"><Chart /></StyledTabPanel>
+            </TabContext>
         </Box>
     );
 }
