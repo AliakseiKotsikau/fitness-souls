@@ -36,6 +36,10 @@ body {
     transform: rotate(-45deg);
   }
 
+  .rouletteContainer {
+    transform: scale(1.2);
+  }
+
   div img {
     display: none;
   }
@@ -44,8 +48,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: scale(1.2);
-    margin-left: 5%;
+    margin-left: 10rem;
     margin-top: 5%;
   }
   
@@ -53,6 +56,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    gap: 10rem;
   }
 
   .exerciesStackContainer {

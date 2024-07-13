@@ -7,7 +7,7 @@ import DeathButton from '../deathButton/DeathButton'
 
 const Chart = props => {
     return (
-      <div>
+      <div className='bossChart'>
         <BarChart
           sx={(theme) => ({
             [`.MuiBarLabel-root`]: {
@@ -23,6 +23,7 @@ const Chart = props => {
                 fill: '#FFFFFF',
               },
             },
+            marginLeft: '10rem'
           })}
           yAxis={[{ scaleType: 'band', dataKey: 'enemy' }]}
           xAxis={[{
@@ -34,15 +35,14 @@ const Chart = props => {
             }
           }]}
           series={[{ dataKey: 'deathNumber' }]}
-          width={600}
-          height={600}
+          width={900}
+          height={700}
           layout='horizontal'
           dataset={file}
           barLabel="value"
+          margin={{left: 150 }}
         />
-        
-        <DeathButton bosses={file}/>
-      </div>
+     </div>   
     )
 }
 

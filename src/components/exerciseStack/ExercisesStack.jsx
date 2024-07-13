@@ -14,7 +14,7 @@ const ExerciseStack = props => {
     return (
         <Stack
             direction="column-reverse"
-            justifyContent="space-evenly"
+            justifyContent="flex-start"
             alignItems="center"
             spacing={-3}
         >

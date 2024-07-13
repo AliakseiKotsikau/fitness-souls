@@ -4,12 +4,13 @@ import arrayShuffle from 'array-shuffle'
 import ExerciseStack from './../exerciseStack/ExercisesStack'
 import exercisesArray from '../../data/exercises'
 
+
+const shuffledData = arrayShuffle(exercisesArray);
+
 const ExerciseWheel = props => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [exercises, setExercises] = useState([]);
-  
-  const shuffledData = arrayShuffle(exercisesArray);
   
   const handleSpinClick = () => {
     if (!mustSpin) {
