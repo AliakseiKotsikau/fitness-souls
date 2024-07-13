@@ -10,7 +10,8 @@ import Chart from '../chart/Chart';
 
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
-    padding: '0rem'
+    padding: '0rem', whiteSpace:"pre"
+
 }
 ));
 
@@ -44,7 +45,13 @@ const StatsTabs = props => {
                     <StyledTab value={1} label="Bosses" />
                 </TabList>
             </Box>
-            <StyledTabPanel value={0} textColor="primary">Statistics TODO</StyledTabPanel>
+            <StyledTabPanel value={0} textColor="primary">
+                Statistics tab{"\n"}
+                - Number of all deaths{"\n"}
+                - Next/current boss{"\n"}
+                - Exercise stats (cards?, table?, chart?){"\n"}
+
+            </StyledTabPanel>
             <StyledTabPanel value={1} textColor="primary"><Chart/></StyledTabPanel>
         </TabContext>
         </Box>
