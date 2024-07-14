@@ -1,0 +1,7 @@
+[
+    {"exercise": "Push-ups", "total": 140},
+    {"exercise": "Squats", "total": 130},
+    {"exercise": "Crunches", "total": 110},
+    {"exercise": "Plank", "total": 0, "unit": "mins"},
+    {"exercise": "Mountain climbers", "total": 0}
+]

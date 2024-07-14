@@ -6,6 +6,7 @@ import exercisesArray from '../../data/exercises'
 import { useTheme } from '@mui/material/styles';
 import ExerciseLimitAlert from '../exerciseLimitAlert/ExerciseLimitAlert';
 
+const LIMIT_OF_EXERCISES = 5;
 
 const shuffledData = arrayShuffle(exercisesArray);
 
@@ -18,7 +19,7 @@ const ExerciseWheel = props => {
   const theme = useTheme();
 
   function handleSpinClick() {
-    if (exercises.length == 3) {
+    if (exercises.length == LIMIT_OF_EXERCISES) {
       setShowMaxExercisesAlert(true);
       setLimitOfExercisesReached(true);
       return;

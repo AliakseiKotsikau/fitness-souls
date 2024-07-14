@@ -7,6 +7,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Chart from '../chart/Chart';
+import ExercisesTable from '../exercisesTable/ExercisesTable';
 
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
@@ -44,7 +45,7 @@ const StatsTabs = props => {
                     </TabList>
                 </Box>
                 <StyledTabPanel value={0} textColor="primary">
-                    Statistics tab
+                    <ExercisesTable/>
                 </StyledTabPanel>
                 <StyledTabPanel value={1} textColor="primary"><Chart /></StyledTabPanel>
             </TabContext>

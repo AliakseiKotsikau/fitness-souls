@@ -38,7 +38,7 @@ const Chart = props => {
         width={1100}
         height={800}
         layout='horizontal'
-        dataset={file}
+        dataset={file.bosses}
         barLabel="value"
         margin={{ left: 150 }}
       />
