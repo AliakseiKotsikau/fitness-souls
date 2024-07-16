@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Wheel } from 'react-custom-roulette'
 import arrayShuffle from 'array-shuffle'
 import ExerciseStack from './../exerciseStack/ExercisesStack'
-import exercisesArray from '../../data/exercises'
+import exercisesArray from '../../data/exercises';
 import { useTheme } from '@mui/material/styles';
 import ExerciseLimitAlert from '../exerciseLimitAlert/ExerciseLimitAlert';
 
@@ -26,11 +26,28 @@ const ExerciseWheel = props => {
     }
 
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * exercisesArray.length);
+      const newPrizeNumber = weighted_random();
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
   }
+
+  function weighted_random() {
+    var i;
+
+    var weights = [shuffledData[0].optionSize];
+
+    for (i = 1; i < shuffledData.length; i++)
+        weights[i] = shuffledData[i].optionSize + weights[i - 1];
+    
+    var random = Math.random() * weights[weights.length - 1];
+    
+    for (i = 0; i < weights.length; i++)
+        if (weights[i] > random)
+            break;
+    
+    return i;
+}
 
   function onStopSpin() {
     setMustSpin(false);
@@ -43,7 +60,7 @@ const ExerciseWheel = props => {
     setExercises(exercises);
   }
 
-  function onExistingExerciseClick() {
+  function onExistingExerciseClick(exerciseName) {
     exercises.shift();
     setExercises([...exercises]);
 

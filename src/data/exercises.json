@@ -7,6 +7,9 @@
     {"option": "20 crunches", "optionSize": 2},
     {"option": "30 sec. plank", "optionSize": 2},
     {"option": "30 climbers", "optionSize": 2},
+    {"option": "30 jumpin jacks", "optionSize": 2},
     {"option": "1 min plank", "optionSize": 1},
-    {"option": "25 pushups", "optionSize": 1}
+    {"option": "30 pushups", "optionSize": 1},
+    {"option": "30 crunches", "optionSize": 1},
+    {"option": "10 burpee", "optionSize": 1}
 ]

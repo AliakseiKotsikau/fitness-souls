@@ -1,13 +1,13 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Chart from '../chart/Chart';
 import ExercisesTable from '../exercisesTable/ExercisesTable';
+import deathStats from '../../data/dark-souls.json'
 
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
@@ -29,6 +29,10 @@ const StatsTabs = props => {
         setValue(newValue);
     };
 
+    const totalNumberOfDeaths = () => {
+        return deathStats.world + deathStats.bosses.reduce((partalSum, bossStat) => partalSum + bossStat.deathNumber, 0);
+    }
+
     return (
         <Box sx={{ typography: 'body1' }}>
             <TabContext value={value}>
@@ -45,7 +49,10 @@ const StatsTabs = props => {
                     </TabList>
                 </Box>
                 <StyledTabPanel value={0} textColor="primary">
-                    <ExercisesTable/>
+                    <Box sx={{width: '70rem', height: '10rem', textAlign: 'center', fontSize: '50px'}}>
+                        Total number of deaths: {totalNumberOfDeaths()}
+                    </Box>
+                    <ExercisesTable />
                 </StyledTabPanel>
                 <StyledTabPanel value={1} textColor="primary"><Chart /></StyledTabPanel>
             </TabContext>
