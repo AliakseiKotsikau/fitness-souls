@@ -9,6 +9,8 @@ import Chart from '../chart/Chart';
 import ExercisesTable from '../exercisesTable/ExercisesTable';
 import deathStats from '../../data/dark-souls.json'
 
+const bossesArray = Object.keys(deathStats.bosses).map( key => ({'enemy': key, 'deathCount': deathStats.bosses[key].deathCount} ));
+
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
     padding: '0rem'
@@ -30,7 +32,7 @@ const StatsTabs = props => {
     };
 
     const totalNumberOfDeaths = () => {
-        return deathStats.world + deathStats.bosses.reduce((partalSum, bossStat) => partalSum + bossStat.deathNumber, 0);
+        return deathStats.world + bossesArray.reduce((partalSum, bossStat) => partalSum + bossStat.deathCount, 0);
     }
 
     return (
@@ -54,7 +56,7 @@ const StatsTabs = props => {
                     </Box>
                     <ExercisesTable />
                 </StyledTabPanel>
-                <StyledTabPanel value={1} textColor="primary"><Chart /></StyledTabPanel>
+                <StyledTabPanel value={1} textColor="primary"><Chart bossesArray={bossesArray}/></StyledTabPanel>
             </TabContext>
         </Box>
     );

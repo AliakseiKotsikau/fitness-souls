@@ -1,8 +1,6 @@
 import * as React from 'react'
 import { BarChart } from '@mui/x-charts/BarChart'
 import { axisClasses } from '@mui/x-charts/ChartsAxis'
-import file from '../../data/dark-souls.json'
-import DeathButton from '../deathButton/DeathButton'
 
 const Chart = props => {
 
@@ -34,11 +32,11 @@ const Chart = props => {
             color: ['green', 'red'],
           }
         }]}
-        series={[{ dataKey: 'deathNumber' }]}
+        series={[{ dataKey: 'deathCount' }]}
         width={1100}
         height={800}
         layout='horizontal'
-        dataset={file.bosses}
+        dataset={props.bossesArray}
         barLabel="value"
         margin={{ left: 150 }}
       />

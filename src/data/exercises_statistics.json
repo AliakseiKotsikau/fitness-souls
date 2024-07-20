@@ -1,7 +1,9 @@
-[
-    {"exercise": "Push-ups", "total": 140},
-    {"exercise": "Squats", "total": 130},
-    {"exercise": "Crunches", "total": 110},
-    {"exercise": "Plank", "total": 0, "unit": "mins"},
-    {"exercise": "Mountain climbers", "total": 0}
-]
+{
+    "exercises_stats": {
+        "Push-ups": {"total": 140},
+        "Squats": {"total": 130},
+        "Crunches": {"total": 110},
+        "Plank": {"total": 0, "unit": "mins"},
+        "Mountain climbers": {"total": 0}
+    }
+}

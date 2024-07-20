@@ -23,7 +23,7 @@ const ExercisesTable = props => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {exerciseStatistics.map((row) => (
+              {/* {exerciseStatistics.map((row) => (
                 <TableRow
                   key={row.exercise}
                   sx={{backgroundColor: theme.palette.common.black}}
@@ -33,7 +33,7 @@ const ExercisesTable = props => {
                   </TableCell>
                   <TableCell align="right">{row.total} {row.unit}</TableCell>
                 </TableRow>
-              ))}
+              ))} */}
             </TableBody>
           </Table>
         </TableContainer>

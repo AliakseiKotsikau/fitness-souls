@@ -1,15 +1,17 @@
-[
-    {"option": "10 push-ups", "optionSize": 3},
-    {"option": "10 squats", "optionSize": 3},
-    {"option": "10 crunches", "optionSize": 3},
-    {"option": "20 push-ups", "optionSize": 2},
-    {"option": "20 squats", "optionSize": 2},
-    {"option": "20 crunches", "optionSize": 2},
-    {"option": "30 sec. plank", "optionSize": 2},
-    {"option": "30 climbers", "optionSize": 2},
-    {"option": "30 jumpin jacks", "optionSize": 2},
-    {"option": "1 min plank", "optionSize": 1},
-    {"option": "30 pushups", "optionSize": 1},
-    {"option": "30 crunches", "optionSize": 1},
-    {"option": "10 burpee", "optionSize": 1}
-]
+{
+    "exercises": {
+        "10 push-ups": {"weight": 3},
+        "10 squats": {"weight": 3},
+        "10 crunches": {"weight": 3},
+        "20 push-ups": {"weight": 2},
+        "20 squats": {"weight": 2},
+        "20 crunches": {"weight": 2},
+        "30 sec. plank": {"weight": 2},
+        "30 climbers": {"weight": 2},
+        "30 jumpin jacks": {"weight": 2},
+        "1 min plank": {"weight": 1},
+        "30 pushups": {"weight": 1},
+        "30 crunches": {"weight": 1},
+        "10 burpee": {"weight": 1}
+    }
+}
