@@ -2,26 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { Wheel } from 'react-custom-roulette'
 import arrayShuffle from 'array-shuffle'
 import ExerciseStack from './../exerciseStack/ExercisesStack'
-import exercises from '../../data/exercises';
 import { useTheme } from '@mui/material/styles';
 import ExerciseLimitAlert from '../exerciseLimitAlert/ExerciseLimitAlert';
 
 const LIMIT_OF_EXERCISES = 5;
 
-const exercisesArray = Object.keys(exercises.exercises).map(key => ({ 'option': key, 'optionSize': exercises.exercises[key].weight }));
-
-const shuffledData = arrayShuffle(exercisesArray);
-
 const ExerciseWheel = props => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [exercises, setExercises] = useState([]);
+  const [exercisesToDo, setExercisesToDo] = useState([]);
   const [showMaxExercisesAlert, setShowMaxExercisesAlert] = useState(false);
   const [limitOfExercisesReached, setLimitOfExercisesReached] = useState(false);
+  const [exercises, setExercises] = useState(mapExercisesToArray);
   const theme = useTheme();
 
+  function mapExercisesToArray() {
+    let userExercises = props.exercises;
+    let exercisesArray = Object.keys(userExercises).map(key => ({ 'option': key, 'optionSize': +userExercises[key].weight }));
+    return arrayShuffle(exercisesArray);
+  }
+
   function handleSpinClick() {
-    if (exercises.length == LIMIT_OF_EXERCISES) {
+    if (exercisesToDo.length == LIMIT_OF_EXERCISES) {
       setShowMaxExercisesAlert(true);
       setLimitOfExercisesReached(true);
       return;
@@ -37,10 +39,10 @@ const ExerciseWheel = props => {
   function weightedRandom() {
     var i;
 
-    var weights = [shuffledData[0].optionSize];
+    var weights = [exercises[0].optionSize];
 
-    for (i = 1; i < shuffledData.length; i++)
-      weights[i] = shuffledData[i].optionSize + weights[i - 1];
+    for (i = 1; i < exercises.length; i++)
+      weights[i] = exercises[i].optionSize + weights[i - 1];
 
     var random = Math.random() * weights[weights.length - 1];
 
@@ -58,15 +60,15 @@ const ExerciseWheel = props => {
       return;
     }
 
-    exercises.push(shuffledData[prizeNumber].option);
-    setExercises(exercises);
+    exercisesToDo.push(exercises[prizeNumber].option);
+    setExercisesToDo(exercisesToDo);
   }
 
   function onExistingExerciseClick(exerciseName) {
-    exercises.shift();
-    setExercises([...exercises]);
+    exercisesToDo.shift();
+    setExercisesToDo([...exercisesToDo]);
 
-    if (exercises.length == 0) {
+    if (exercisesToDo.length == 0) {
       setLimitOfExercisesReached(false);
     }
   }
@@ -87,7 +89,7 @@ const ExerciseWheel = props => {
           <Wheel
             mustStartSpinning={mustSpin}
             prizeNumber={prizeNumber}
-            data={shuffledData}
+            data={exercises}
             disableInitialAnimation={true}
             spinDuration={0.1}
             backgroundColors={[theme.palette.common.black]}
@@ -105,7 +107,7 @@ const ExerciseWheel = props => {
           <div className="marker" />
         </div>
         <div className='exerciesStackContainer'>
-          <ExerciseStack exercises={[...exercises].reverse()} onExerciseItemClick={onExistingExerciseClick} />
+          <ExerciseStack exercises={[...exercisesToDo].reverse()} onExerciseItemClick={onExistingExerciseClick} />
         </div>
       </div>
     </>
