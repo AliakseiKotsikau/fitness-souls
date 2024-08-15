@@ -7,7 +7,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Chart from '../chart/Chart';
 import ExercisesTable from '../exercisesTable/ExercisesTable';
-import deathStats from '../../data/dark-souls.json'
+import DeathStatsBox from './deathStatsBox/DeathStatsBox';
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
     padding: '0rem'
@@ -37,7 +37,11 @@ const StatsTabs = props => {
     }
 
     const totalNumberOfDeaths = () => {
-        return deathStats.world + bosses.reduce((partalSum, bossStat) => partalSum + bossStat.deathCount, 0);
+        return props.worldDeathCount + numberOfDeathOnBosses();
+    }
+
+    const numberOfDeathOnBosses = () => {
+        return bosses.reduce((partalSum, bossStat) => partalSum + bossStat.deathCount, 0);
     }
 
     return (
@@ -57,10 +61,16 @@ const StatsTabs = props => {
                 </Box>
 
                 <StyledTabPanel value={0} textColor="primary">
-                    <Box sx={{ width: '70rem', height: '10rem', textAlign: 'center', fontSize: '50px' }}>
-                        Total number of deaths: {totalNumberOfDeaths()}
+                    <Box>
+                        <Box sx={{ width: '70rem', height: '5rem', textAlign: 'center', fontSize: '50px' }}>
+                            Total number of deaths: {totalNumberOfDeaths()}
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <DeathStatsBox onClick={props.onHandleWorldDeath} numberOfDeathsText={'World: ' + props.worldDeathCount}/>
+                            <DeathStatsBox numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()}/>
+                        </Box>
                     </Box>
-                    <ExercisesTable exercisesStatistics={props.exercisesStatistics}/>
+                    <ExercisesTable exercisesStatistics={props.exercisesStatistics} />
                 </StyledTabPanel>
 
                 <StyledTabPanel value={1} textColor="primary"><Chart bossesArray={bosses} /></StyledTabPanel>
