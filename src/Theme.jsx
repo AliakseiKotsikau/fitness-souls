@@ -15,6 +15,9 @@ const DEFAULT_THEME = createTheme({
         light: '#cab28d'
     },
   },
+  typography: {
+    fontSize: 16,
+  }
 });
 
 export default DEFAULT_THEME;

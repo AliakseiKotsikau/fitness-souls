@@ -14,7 +14,7 @@ function App() {
   
   const  getUserStatistics = async () => {
 
-    const response = await getRequestWithNativeFetch("https://0gerl9oj49.execute-api.eu-central-1.amazonaws.com/DEV/getUserStatistics?user=kotsial&game=DarkSouls1");
+    const response = await getRequestWithNativeFetch("https://0gerl9oj49.execute-api.eu-central-1.amazonaws.com/DEV/statistics?user=kotsial&game=DarkSouls1");
     const jsonData = JSON.parse(response);
 
     setUserData(jsonData);
@@ -30,7 +30,7 @@ function App() {
     <div className="App">
       <ThemeProvider theme={DEFAULT_THEME}>
         {loaded && <ExerciseWheel exercises={userData.exercises}/> }
-        <StatsTabs />
+        {loaded && <StatsTabs bosses={userData.bosses} exercisesStatistics={userData.exerciseStats}/>}
       </ThemeProvider>
     </div>
   );

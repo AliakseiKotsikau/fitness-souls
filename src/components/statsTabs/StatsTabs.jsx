@@ -9,9 +9,6 @@ import Chart from '../chart/Chart';
 import ExercisesTable from '../exercisesTable/ExercisesTable';
 import deathStats from '../../data/dark-souls.json'
 
-const bossesArray = Object.keys(deathStats.bosses).map( key => ({'enemy': key, 'deathCount': deathStats.bosses[key].deathCount} ));
-
-
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
     padding: '0rem'
 }
@@ -26,13 +23,21 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 
 const StatsTabs = props => {
     const [value, setValue] = React.useState(0);
+    const [bosses, setBosses] = React.useState(mapBossesToArray);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    function mapBossesToArray() {
+        let bossesArray = props.bosses;
+        return Object.keys(bossesArray)
+            .map(key => ({ 'enemy': key, 'deathCount': +bossesArray[key].deathCount, 'orderNumber': +bossesArray[key].orderNumber }))
+            .sort((a, b) => a.orderNumber - b.orderNumber);
+    }
+
     const totalNumberOfDeaths = () => {
-        return deathStats.world + bossesArray.reduce((partalSum, bossStat) => partalSum + bossStat.deathCount, 0);
+        return deathStats.world + bosses.reduce((partalSum, bossStat) => partalSum + bossStat.deathCount, 0);
     }
 
     return (
@@ -50,13 +55,15 @@ const StatsTabs = props => {
                         <StyledTab value={1} label="Bosses" />
                     </TabList>
                 </Box>
+
                 <StyledTabPanel value={0} textColor="primary">
-                    <Box sx={{width: '70rem', height: '10rem', textAlign: 'center', fontSize: '50px'}}>
+                    <Box sx={{ width: '70rem', height: '10rem', textAlign: 'center', fontSize: '50px' }}>
                         Total number of deaths: {totalNumberOfDeaths()}
                     </Box>
-                    <ExercisesTable />
+                    <ExercisesTable exercisesStatistics={props.exercisesStatistics}/>
                 </StyledTabPanel>
-                <StyledTabPanel value={1} textColor="primary"><Chart bossesArray={bossesArray}/></StyledTabPanel>
+
+                <StyledTabPanel value={1} textColor="primary"><Chart bossesArray={bosses} /></StyledTabPanel>
             </TabContext>
         </Box>
     );

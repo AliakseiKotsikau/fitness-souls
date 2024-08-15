@@ -23,34 +23,38 @@ const ExerciseWheel = props => {
   }
 
   function handleSpinClick() {
-    if (exercisesToDo.length == LIMIT_OF_EXERCISES) {
+    if (exercisesToDo.length === LIMIT_OF_EXERCISES) {
       setShowMaxExercisesAlert(true);
       setLimitOfExercisesReached(true);
       return;
     }
 
     if (!mustSpin) {
-      const newPrizeNumber = weightedRandom();
+      const newPrizeNumber = weightedRandom(exercises);
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
   }
 
-  function weightedRandom() {
-    var i;
-
-    var weights = [exercises[0].optionSize];
-
-    for (i = 1; i < exercises.length; i++)
-      weights[i] = exercises[i].optionSize + weights[i - 1];
-
-    var random = Math.random() * weights[weights.length - 1];
-
-    for (i = 0; i < weights.length; i++)
-      if (weights[i] > random)
-        break;
-
-    return i;
+  function weightedRandom(exercises) {  
+    // Calculate the total sum of optionSizes
+    const totalWeight = exercises.reduce((sum, exercise) => sum + exercise.optionSize, 0);
+  
+    // Generate a random number between 0 and totalWeight
+    const randomNum = Math.random() * totalWeight;
+  
+    // Iterate through exercises and find the selected exercise index
+    let cumulativeWeight = 0;
+    for (let i = 0; i < exercises.length; i++) {
+      const exercise = exercises[i];
+      cumulativeWeight += exercise.optionSize;
+      if (randomNum < cumulativeWeight) {
+        return i; // Return the index of the selected exercise
+      }
+    }
+  
+    // This should never happen, but just in case
+    throw new Error('Failed to select an exercise');
   }
 
   function onStopSpin() {
@@ -68,7 +72,7 @@ const ExerciseWheel = props => {
     exercisesToDo.shift();
     setExercisesToDo([...exercisesToDo]);
 
-    if (exercisesToDo.length == 0) {
+    if (exercisesToDo.length === 0) {
       setLimitOfExercisesReached(false);
     }
   }
