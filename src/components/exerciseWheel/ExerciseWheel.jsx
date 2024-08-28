@@ -4,17 +4,22 @@ import arrayShuffle from 'array-shuffle'
 import ExerciseStack from './../exerciseStack/ExercisesStack'
 import { useTheme } from '@mui/material/styles';
 import ExerciseLimitAlert from '../exerciseLimitAlert/ExerciseLimitAlert';
+import { useSelector, useDispatch } from 'react-redux'
+import { wheelSpinned } from '../../slices/fitnessSoulsSlice';
 
 const LIMIT_OF_EXERCISES = 5;
 
 const ExerciseWheel = props => {
-  const [mustSpin, setMustSpin] = useState(false);
+
+  const deathButtonClicked = useSelector(state => state.fitnessSouls.deathButtonClicked);
   const [prizeNumber, setPrizeNumber] = useState(0);
+  const [mustSpin, setMustSpin] = useState(false);
   const [exercisesToDo, setExercisesToDo] = useState([]);
   const [showMaxExercisesAlert, setShowMaxExercisesAlert] = useState(false);
   const [limitOfExercisesReached, setLimitOfExercisesReached] = useState(false);
   const [exercises, setExercises] = useState(mapExercisesToArray);
   const theme = useTheme();
+  const dispatch = useDispatch()
 
   function mapExercisesToArray() {
     let userExercises = props.exercises;
@@ -36,13 +41,13 @@ const ExerciseWheel = props => {
     }
   }
 
-  function weightedRandom(exercises) {  
+  function weightedRandom(exercises) {
     // Calculate the total sum of optionSizes
     const totalWeight = exercises.reduce((sum, exercise) => sum + exercise.optionSize, 0);
-  
+
     // Generate a random number between 0 and totalWeight
     const randomNum = Math.random() * totalWeight;
-  
+
     // Iterate through exercises and find the selected exercise index
     let cumulativeWeight = 0;
     for (let i = 0; i < exercises.length; i++) {
@@ -52,13 +57,14 @@ const ExerciseWheel = props => {
         return i; // Return the index of the selected exercise
       }
     }
-  
+
     // This should never happen, but just in case
     throw new Error('Failed to select an exercise');
   }
 
   function onStopSpin() {
     setMustSpin(false);
+    dispatch(wheelSpinned());
 
     if (limitOfExercisesReached) {
       return;
@@ -85,6 +91,12 @@ const ExerciseWheel = props => {
     }
   }, [showMaxExercisesAlert]);
 
+  useEffect(() => {
+    if (deathButtonClicked) {
+      handleSpinClick();
+    }
+  }, [deathButtonClicked]);
+
   return (
     <>
       {showMaxExercisesAlert ? <ExerciseLimitAlert onCloseAlert={() => { setShowMaxExercisesAlert(false) }} /> : <></>}
@@ -95,7 +107,7 @@ const ExerciseWheel = props => {
             prizeNumber={prizeNumber}
             data={exercises}
             disableInitialAnimation={true}
-            spinDuration={0.1}
+            spinDuration={0.05}
             backgroundColors={[theme.palette.common.black]}
             textColors={[theme.palette.primary.main]}
             outerBorderWidth={3}
@@ -105,8 +117,8 @@ const ExerciseWheel = props => {
             radiusLineColor={theme.palette.secondary.main}
             onStopSpinning={onStopSpin}
           />
-          <button className="spinButton" disabled={limitOfExercisesReached} onClick={handleSpinClick}>
-            SPIN
+          <button className="spinButton" disabled>
+            TRY
           </button>
           <div className="marker" />
         </div>

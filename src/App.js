@@ -6,12 +6,15 @@ import DEFAULT_THEME from './Theme';
 import { ThemeProvider } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { getRequestWithNativeFetch, postRequest } from "./FetchUtils";
+import { useSelector, useDispatch } from 'react-redux'
+import { deathButtonClick } from './slices/fitnessSoulsSlice';
 
 // TODO remove double call of service, it seems that APP is rendered twice
 function App() {
   const [userData, setUserData] = useState(null);
   const [worldDeathCount, setWorldDeathCount] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const dispatch = useDispatch();
   
   const getUserStatistics = async () => {
 
@@ -30,6 +33,7 @@ function App() {
       let jsonData = JSON.parse(response.body);
       setWorldDeathCount(jsonData.worldDeathCount);
     });
+    dispatch(deathButtonClick());
   }
 
   useEffect(() => {

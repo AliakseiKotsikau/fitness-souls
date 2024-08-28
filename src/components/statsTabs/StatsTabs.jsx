@@ -8,6 +8,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Chart from '../chart/Chart';
 import ExercisesTable from '../exercisesTable/ExercisesTable';
 import DeathStatsBox from './deathStatsBox/DeathStatsBox';
+import BossSelect from '../bossSelect/BossSelect';
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
     padding: '0rem'
@@ -23,13 +24,13 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 
 const StatsTabs = props => {
     const [value, setValue] = React.useState(0);
-    const [bosses, setBosses] = React.useState(mapBossesToArray);
+    const [bosses, setBosses] = React.useState(mapBossesDeathsToArray);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    function mapBossesToArray() {
+    function mapBossesDeathsToArray() {
         let bossesArray = props.bosses;
         return Object.keys(bossesArray)
             .map(key => ({ 'enemy': key, 'deathCount': +bossesArray[key].deathCount, 'orderNumber': +bossesArray[key].orderNumber }))
@@ -66,8 +67,9 @@ const StatsTabs = props => {
                             Total number of deaths: {totalNumberOfDeaths()}
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <DeathStatsBox onClick={props.onHandleWorldDeath} numberOfDeathsText={'World: ' + props.worldDeathCount}/>
-                            <DeathStatsBox numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()}/>
+                            <DeathStatsBox onClick={props.onHandleWorldDeath} numberOfDeathsText={'World: ' + props.worldDeathCount} />
+                            <BossSelect bosses={Object.keys(props.bosses)} />
+                            <DeathStatsBox numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()} />
                         </Box>
                     </Box>
                     <ExercisesTable exercisesStatistics={props.exercisesStatistics} />
