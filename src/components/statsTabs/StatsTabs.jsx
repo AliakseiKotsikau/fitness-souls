@@ -62,7 +62,7 @@ const StatsTabs = props => {
                 </Box>
 
                 <StyledTabPanel value={0} textColor="primary">
-                    <Box>
+                    <Box sx={{ height: '25rem'}}>
                         <Box sx={{ width: '70rem', height: '5rem', textAlign: 'center', fontSize: '50px' }}>
                             Total number of deaths: {totalNumberOfDeaths()}
                         </Box>

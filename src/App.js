@@ -4,13 +4,15 @@ import StatsTabs from './components/statsTabs/StatsTabs';
 import "./styles.css";
 import DEFAULT_THEME from './Theme';
 import { ThemeProvider } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getRequestWithNativeFetch, postRequest } from "./FetchUtils";
 import { useSelector, useDispatch } from 'react-redux'
 import { deathButtonClick } from './slices/fitnessSoulsSlice';
 
 // TODO remove double call of service, it seems that APP is rendered twice
 function App() {
+  const isFirstRender = useRef(true);
+
   const [userData, setUserData] = useState(null);
   const [worldDeathCount, setWorldDeathCount] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -20,7 +22,6 @@ function App() {
 
     const response = await getRequestWithNativeFetch("https://0gerl9oj49.execute-api.eu-central-1.amazonaws.com/DEV/statistics?user=kotsial&game=DarkSouls1");
     const jsonData = JSON.parse(response);
-
     setUserData(jsonData);
     setWorldDeathCount(+jsonData.worldDeathCount);
     setLoaded(true);
@@ -37,7 +38,11 @@ function App() {
   }
 
   useEffect(() => {
-    getUserStatistics();
+    // is used to load entire statistics only on first app render
+    if(isFirstRender.current) {
+      isFirstRender.current = false;
+      getUserStatistics();
+    }
   }, []);
 
   return (

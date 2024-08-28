@@ -4,7 +4,8 @@ export const fitnessSoulsSlice = createSlice({
     name: 'deathButtonClicked',
     initialState: {
         deathButtonClicked: false,
-        wheelSpins: false
+        wheelSpins: false,
+        limitOfExercisesReached: false,
     },
     reducers: {
         deathButtonClick: state => {
@@ -12,6 +13,9 @@ export const fitnessSoulsSlice = createSlice({
         },
         wheelSpinned: state => {
             state.deathButtonClicked = false
+        },
+        limitOfExercisesReached: state => {
+            state.limitOfExercisesReached = true
         }
     }
 })
