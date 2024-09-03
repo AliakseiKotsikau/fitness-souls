@@ -5,13 +5,16 @@ import "./styles.css";
 import DEFAULT_THEME from './Theme';
 import { ThemeProvider } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
-import { getRequestWithNativeFetch, postRequest } from "./FetchUtils";
+import { fetchUserStatisticsForGame, updateWorldDeathCount } from "./FetchUtils";
 import { useSelector, useDispatch } from 'react-redux'
-import { deathButtonClick } from './slices/fitnessSoulsSlice';
+import { deathButtonClick, changeCurrentBoss } from './slices/fitnessSoulsSlice';
 
 // TODO remove double call of service, it seems that APP is rendered twice
 function App() {
   const isFirstRender = useRef(true);
+
+  const user = useSelector((state) => state.fitnessSouls.user);
+  const game = useSelector((state) => state.fitnessSouls.game);
 
   const [userData, setUserData] = useState(null);
   const [worldDeathCount, setWorldDeathCount] = useState(0);
@@ -19,18 +22,17 @@ function App() {
   const dispatch = useDispatch();
   
   const getUserStatistics = async () => {
-
-    const response = await getRequestWithNativeFetch("https://0gerl9oj49.execute-api.eu-central-1.amazonaws.com/DEV/statistics?user=kotsial&game=DarkSouls1");
+    const response = await fetchUserStatisticsForGame(user, game);
     const jsonData = JSON.parse(response);
+    console.log(jsonData);
     setUserData(jsonData);
     setWorldDeathCount(+jsonData.worldDeathCount);
+    dispatch(changeCurrentBoss(jsonData.currentBoss));
     setLoaded(true);
   }
 
   function onHandleWorldDeath() {
-    let body = {"user": "kotsial", "game": "DarkSouls1"};
-    postRequest("https://0gerl9oj49.execute-api.eu-central-1.amazonaws.com/DEV/deaths/world", body).then(response => {
-      console.log(response);
+    updateWorldDeathCount(user, game).then(response => {
       let jsonData = JSON.parse(response.body);
       setWorldDeathCount(jsonData.worldDeathCount);
     });

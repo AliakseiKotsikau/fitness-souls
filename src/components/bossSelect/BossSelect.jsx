@@ -5,6 +5,9 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeCurrentBoss } from '../../slices/fitnessSoulsSlice';
+import { updateCurrentBoss } from '../../FetchUtils';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -39,16 +42,25 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 ));
 
 const BossSelect = props => {
-    const [personName, setPersonName] = useState('');
+    const user = useSelector(state => state.fitnessSouls.user);
+    const game = useSelector(state => state.fitnessSouls.game);
+    const boss = useSelector(state => state.fitnessSouls.currentBoss);
+    
+    const dispatch = useDispatch();
+
+    function onChangeSelect(event) {
+        updateCurrentBoss(user, game, event.target.value);
+        dispatch(changeCurrentBoss(event.target.value));
+    }
 
     return (
         <FormControl variant='outlined' sx={{ width: 300 }}>
-            <InputLabel sx={{ color: 'primary.main' }} id="demo-simple-select-autowidth-label">Boss</InputLabel>
+            <InputLabel sx={{ color: 'primary.main' }} id="boss-select-label">Boss</InputLabel>
             <StyledSelect
-                labelId="demo-multiple-name-label"
-                id="demo-multiple-name"
-                value={personName}
-                onChange={(event) => setPersonName(event.target.value)}
+                labelId="boss-select-label"
+                id="boss-select"
+                value={boss}
+                onChange={onChangeSelect}
                 input={<OutlinedInput label="Boss" />}
                 MenuProps={MenuProps}
             >
