@@ -33,8 +33,8 @@ const Chart = props => {
           tickMinStep: 1,
           colorMap: {
             type: 'continuous',
-            min: 3,
-            max: 10,
+            min: 5,
+            max: 12,
             color: ['green', 'red'],
           }
         }]}
@@ -43,7 +43,7 @@ const Chart = props => {
         height={800}
         layout='horizontal'
         dataset={mapBossesDeathsToArray(props.bossesArray)}
-        barLabel="value"
+        barLabel='value'
         margin={{ left: 150 }}
       />
     </div>

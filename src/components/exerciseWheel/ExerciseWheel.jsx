@@ -12,14 +12,16 @@ const LIMIT_OF_EXERCISES = 5;
 const ExerciseWheel = props => {
 
   const deathButtonClicked = useSelector(state => state.fitnessSouls.deathButtonClicked);
+  const theme = useTheme();
+  const dispatch = useDispatch()
+
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [mustSpin, setMustSpin] = useState(false);
   const [exercisesToDo, setExercisesToDo] = useState([]);
   const [showMaxExercisesAlert, setShowMaxExercisesAlert] = useState(false);
   const [limitOfExercisesReached, setLimitOfExercisesReached] = useState(false);
   const [exercises, setExercises] = useState(mapExercisesToArray);
-  const theme = useTheme();
-  const dispatch = useDispatch()
+
 
   function mapExercisesToArray() {
     let userExercises = props.exercises;
@@ -28,9 +30,9 @@ const ExerciseWheel = props => {
   }
 
   function handleSpinClick() {
-    if (exercisesToDo.length === LIMIT_OF_EXERCISES) {
+    if (limitOfExercisesReached) {
       setShowMaxExercisesAlert(true);
-      setLimitOfExercisesReached(true);
+      dispatch(wheelSpinned());
       return;
     }
 
@@ -72,22 +74,31 @@ const ExerciseWheel = props => {
 
     exercisesToDo.push(exercises[prizeNumber].option);
     setExercisesToDo(exercisesToDo);
+
+    if (exercisesToDo.length === LIMIT_OF_EXERCISES) {
+      setLimitOfExercisesReached(true);
+    }
   }
 
-  function onExistingExerciseClick(exerciseName) {
+  function onExerciseItemClick(exerciseName) {
     exercisesToDo.shift();
     setExercisesToDo([...exercisesToDo]);
 
-    if (exercisesToDo.length === 0) {
+    if (exercisesToDo.length < LIMIT_OF_EXERCISES) {
       setLimitOfExercisesReached(false);
     }
+
+    let exercise = props.exercises[exerciseName].type;
+    let quantity = props.exercises[exerciseName].quantity;
+
+    props.handleExerciseStatisticsUpdate(exercise, quantity);
   }
 
   useEffect(() => {
     if (showMaxExercisesAlert) {
       setTimeout(() => {
         setShowMaxExercisesAlert(false);
-      }, 10000);
+      }, 5000);
     }
   }, [showMaxExercisesAlert]);
 
@@ -123,7 +134,7 @@ const ExerciseWheel = props => {
           <div className="marker" />
         </div>
         <div className='exerciesStackContainer'>
-          <ExerciseStack exercises={[...exercisesToDo].reverse()} onExerciseItemClick={onExistingExerciseClick} />
+          <ExerciseStack exercises={[...exercisesToDo].reverse()} onExerciseItemClick={onExerciseItemClick} />
         </div>
       </div>
     </>

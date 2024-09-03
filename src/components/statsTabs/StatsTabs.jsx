@@ -38,7 +38,6 @@ const StatsTabs = props => {
     }
 
     const numberOfDeathOnBosses = () => {
-        console.log(bosses);
         return Object.values(bosses).map(bossStat => +bossStat.deathCount).reduce((partalSum, deathCount) => partalSum + deathCount, 0);
     }
 
