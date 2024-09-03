@@ -9,6 +9,8 @@ import Chart from '../chart/Chart';
 import ExercisesTable from '../exercisesTable/ExercisesTable';
 import DeathStatsBox from './deathStatsBox/DeathStatsBox';
 import BossSelect from '../bossSelect/BossSelect';
+import SingleBossInfo from '../specificBossInfo/SingleBossInfo';
+import { useSelector, useDispatch } from 'react-redux'
 
 const StyledTabPanel = styled(TabPanel)(({ theme }) => ({
     padding: '0rem'
@@ -24,25 +26,20 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 
 const StatsTabs = props => {
     const [value, setValue] = React.useState(0);
-    const [bosses, setBosses] = React.useState(mapBossesDeathsToArray);
+    const bosses = useSelector(state => state.fitnessSouls.bosses);
+    const currentBoss = useSelector((state) => state.fitnessSouls.currentBoss);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    function mapBossesDeathsToArray() {
-        let bossesArray = props.bosses;
-        return Object.keys(bossesArray)
-            .map(key => ({ 'enemy': key, 'deathCount': +bossesArray[key].deathCount, 'orderNumber': +bossesArray[key].orderNumber }))
-            .sort((a, b) => a.orderNumber - b.orderNumber);
-    }
 
     const totalNumberOfDeaths = () => {
         return props.worldDeathCount + numberOfDeathOnBosses();
     }
 
     const numberOfDeathOnBosses = () => {
-        return bosses.reduce((partalSum, bossStat) => partalSum + bossStat.deathCount, 0);
+        console.log(bosses);
+        return Object.values(bosses).map(bossStat => +bossStat.deathCount).reduce((partalSum, deathCount) => partalSum + deathCount, 0);
     }
 
     return (
@@ -63,13 +60,13 @@ const StatsTabs = props => {
 
                 <StyledTabPanel value={0} textColor="primary">
                     <Box sx={{ height: '25rem'}}>
-                        <Box sx={{ width: '70rem', height: '5rem', textAlign: 'center', fontSize: '50px' }}>
+                        <Box sx={{ width: '70rem', height: '6rem', textAlign: 'center', fontSize: '50px' }}>
                             Total number of deaths: {totalNumberOfDeaths()}
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <DeathStatsBox onClick={props.onHandleWorldDeath} numberOfDeathsText={'World: ' + props.worldDeathCount} />
-                            <BossSelect bosses={Object.keys(props.bosses)} />
-                            <DeathStatsBox numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()} />
+                            <DeathStatsBox onClick={props.onHandleBossDeath} numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()} />
+                            <SingleBossInfo bosses={Object.keys(bosses)} deathCount={bosses[currentBoss].deathCount}/>
                         </Box>
                     </Box>
                     <ExercisesTable exercisesStatistics={props.exercisesStatistics} />

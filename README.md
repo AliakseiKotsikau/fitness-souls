@@ -22,12 +22,13 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 - [x] Number of deaths in the world at the bosses tab (above or below graph)
 - [x] choose db and create table scripts (or not)
 - [ ] Show current boss if it was selected and number of deaths on him
-- [ ] Update boss death count after click on boss death button
+- [x] Update boss death count after click on boss death button
 - [ ] Next and current bosses on stats tab
 - [ ] Number of deaths on the current boss (dropdonw or smth else for the next boss)
 - [ ] For defeated bosses with 0 deaths shows some message like 'Flawess Vicotry!' or similar (perhaps some flag will be required in json) 
 - [ ] Add some flag to the boss, which shows whether it is beaten or not
 - [ ] Click on exercise panel adds it to statistics 
+- [ ] Ask Kolya why so many rerenders of component
 
 
 Optional:

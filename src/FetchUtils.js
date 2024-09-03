@@ -1,4 +1,8 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+const GET_STATISTICS_URL = BASE_URL + process.env.REACT_APP_GET_STATISTICS_URL;
+const UPDATE_WORLD_DEATH_COUNT_URL = BASE_URL + process.env.REACT_APP_UPDATE_WORLD_DEATH_COUNT_URL;
+const UPDATE_BOSS_DEATH_COUNT_URL = BASE_URL + process.env.REACT_APP_UPDATE_BOSS_DEATH_COUNT_URL;
+const UPDATE_CURRENT_BOSS_URL = BASE_URL + process.env.REACT_APP_UPDATE_CURRENT_BOSS_URL;
 
 function processResponse(response) {
   if (!response.ok) {
@@ -15,21 +19,25 @@ async function postRequest(url, body) {
 };
 
 export const fetchUserStatisticsForGame = async (user, game) => {
-  const response = await fetch(`${BASE_URL}/DEV/statistics?user=${user}&game=${game}`);
+  const response = await fetch(`${GET_STATISTICS_URL}?user=${user}&game=${game}`);
 
   return processResponse(response);
 };
 
 export const updateWorldDeathCount = async (user, game) => {
   let body = {"user": user, "game": game};
-  let url = `${BASE_URL}/DEV/deaths/world`;
 
-  return postRequest(url, body);
+  return postRequest(UPDATE_WORLD_DEATH_COUNT_URL, body);
+};
+
+export const updateBossDeathCount = async (user, game, boss) => {
+  let body = {"user": user, "game": game, "boss": boss};
+
+  return postRequest(UPDATE_BOSS_DEATH_COUNT_URL, body);
 };
 
 export const updateCurrentBoss = async (user, game, boss) => {
   let body = {"user": user, "game": game, "boss": boss};
-  let url = `${BASE_URL}/DEV/bosses/current`;
 
-  return postRequest(url, body);
+  return postRequest(UPDATE_CURRENT_BOSS_URL, body);
 };

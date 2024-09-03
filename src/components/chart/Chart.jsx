@@ -4,6 +4,12 @@ import { axisClasses } from '@mui/x-charts/ChartsAxis'
 
 const Chart = props => {
 
+  function mapBossesDeathsToArray(bossesMap) {
+    return Object.keys(bossesMap)
+        .map(key => ({ 'enemy': key, 'deathCount': +bossesMap[key].deathCount, 'orderNumber': +bossesMap[key].orderNumber }))
+        .sort((a, b) => a.orderNumber - b.orderNumber);
+  }
+
   return (
     <div className='bossChart'>
       <BarChart
@@ -36,7 +42,7 @@ const Chart = props => {
         width={1100}
         height={800}
         layout='horizontal'
-        dataset={props.bossesArray}
+        dataset={mapBossesDeathsToArray(props.bossesArray)}
         barLabel="value"
         margin={{ left: 150 }}
       />

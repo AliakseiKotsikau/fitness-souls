@@ -5,9 +5,9 @@ import "./styles.css";
 import DEFAULT_THEME from './Theme';
 import { ThemeProvider } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
-import { fetchUserStatisticsForGame, updateWorldDeathCount } from "./FetchUtils";
+import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount } from "./FetchUtils";
 import { useSelector, useDispatch } from 'react-redux'
-import { deathButtonClick, changeCurrentBoss } from './slices/fitnessSoulsSlice';
+import { worldDeathButtonClick, changeCurrentBoss, bossDeathButtonClick, setBosses, setInitialData } from './slices/fitnessSoulsSlice';
 
 // TODO remove double call of service, it seems that APP is rendered twice
 function App() {
@@ -15,19 +15,19 @@ function App() {
 
   const user = useSelector((state) => state.fitnessSouls.user);
   const game = useSelector((state) => state.fitnessSouls.game);
+  const currentBoss = useSelector((state) => state.fitnessSouls.currentBoss);
 
   const [userData, setUserData] = useState(null);
   const [worldDeathCount, setWorldDeathCount] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  
+
   const getUserStatistics = async () => {
-    const response = await fetchUserStatisticsForGame(user, game);
-    const jsonData = JSON.parse(response);
-    console.log(jsonData);
+    let response = await fetchUserStatisticsForGame(user, game);
+    let jsonData = JSON.parse(response);
     setUserData(jsonData);
     setWorldDeathCount(+jsonData.worldDeathCount);
-    dispatch(changeCurrentBoss(jsonData.currentBoss));
+    dispatch(setInitialData(jsonData));
     setLoaded(true);
   }
 
@@ -36,12 +36,17 @@ function App() {
       let jsonData = JSON.parse(response.body);
       setWorldDeathCount(jsonData.worldDeathCount);
     });
-    dispatch(deathButtonClick());
+    dispatch(worldDeathButtonClick());
+  }
+
+  function onHandleBossDeath() {
+    updateBossDeathCount(user, game, currentBoss)
+    dispatch(bossDeathButtonClick(currentBoss));
   }
 
   useEffect(() => {
     // is used to load entire statistics only on first app render
-    if(isFirstRender.current) {
+    if (isFirstRender.current) {
       isFirstRender.current = false;
       getUserStatistics();
     }
@@ -51,8 +56,9 @@ function App() {
 
     <div className="App">
       <ThemeProvider theme={DEFAULT_THEME}>
-        {loaded && <ExerciseWheel exercises={userData.exercises}/> }
-        {loaded && <StatsTabs bosses={userData.bosses} exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount} onHandleWorldDeath={onHandleWorldDeath}/>}
+        {loaded && <ExerciseWheel exercises={userData.exercises} />}
+        {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
+          onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} />}
       </ThemeProvider>
     </div>
   );
