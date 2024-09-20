@@ -19,19 +19,19 @@ const ExercisesTable = props => {
   }
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} >
+    <TableContainer component={Paper} sx={{ maxHeight: 550 }}>
+      <Table size='small'>
         <TableHead>
           <TableRow sx={{ backgroundColor: theme.palette.secondary.main, fontWeight: '10' }}>
             <TableCell>Exercise</TableCell>
-            <TableCell>Total</TableCell>
+            <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {mapExercisesStatisticsToArray(exercisesStatistics).map((row) => (
             <TableRow
               key={row.exercise}
-              sx={{ backgroundColor: theme.palette.common.black }}
+              sx={{ backgroundColor: theme.palette.common.black}}
             >
               <TableCell component="th" scope="row">
                 {row.exercise}

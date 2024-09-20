@@ -1,13 +1,15 @@
-import Chart from "./components/chart/Chart";
 import ExerciseWheel from './components/exerciseWheel/ExerciseWheel';
 import StatsTabs from './components/statsTabs/StatsTabs';
 import "./styles.css";
 import DEFAULT_THEME from './Theme';
+import Box from '@mui/material/Box';
 import { ThemeProvider } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
 import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount, updateExerciseStatistics } from "./FetchUtils";
 import { useSelector, useDispatch } from 'react-redux'
-import { worldDeathButtonClick, bossDeathButtonClick,addRepsToExercise, setInitialData } from './slices/fitnessSoulsSlice';
+import { worldDeathButtonClick, bossDeathButtonClick, addRepsToExercise, setInitialData } from './slices/fitnessSoulsSlice';
+import DefaultAppBar from "./components/appBar/DefaultAppBar";
+
 
 // TODO remove double call of service, it seems that APP is rendered twice
 function App() {
@@ -62,9 +64,12 @@ function App() {
 
     <div className="App">
       <ThemeProvider theme={DEFAULT_THEME}>
-        {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />}
-        {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
-          onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} />}
+        <DefaultAppBar />
+        <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-between', marginTop: '80px'}}>
+          {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />}
+          {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
+            onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} />}
+        </Box>
       </ThemeProvider>
     </div>
   );

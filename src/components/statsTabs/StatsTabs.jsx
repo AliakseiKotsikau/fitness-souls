@@ -8,7 +8,6 @@ import TabPanel from '@mui/lab/TabPanel';
 import Chart from '../chart/Chart';
 import ExercisesTable from '../exercisesTable/ExercisesTable';
 import DeathStatsBox from './deathStatsBox/DeathStatsBox';
-import BossSelect from '../bossSelect/BossSelect';
 import SingleBossInfo from '../specificBossInfo/SingleBossInfo';
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -41,6 +40,10 @@ const StatsTabs = props => {
         return Object.values(bosses).map(bossStat => +bossStat.deathCount).reduce((partalSum, deathCount) => partalSum + deathCount, 0);
     }
 
+    const filterBeatenBosses = (bosses) => {
+        return Object.keys(bosses).filter(bossName => !bosses[bossName].beaten);
+    }
+
     return (
         <Box sx={{ typography: 'body1' }}>
             <TabContext value={value}>
@@ -58,14 +61,14 @@ const StatsTabs = props => {
                 </Box>
 
                 <StyledTabPanel value={0} textColor="primary">
-                    <Box sx={{ height: '25rem'}}>
+                    <Box sx={{ height: '20rem'}}>
                         <Box sx={{ width: '70rem', height: '6rem', textAlign: 'center', fontSize: '50px' }}>
                             Total number of deaths: {totalNumberOfDeaths()}
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <DeathStatsBox onClick={props.onHandleWorldDeath} numberOfDeathsText={'World: ' + props.worldDeathCount} />
                             <DeathStatsBox onClick={props.onHandleBossDeath} numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()} />
-                            <SingleBossInfo bosses={Object.keys(bosses)} deathCount={bosses[currentBoss].deathCount}/>
+                            <SingleBossInfo bosses={filterBeatenBosses(bosses)} deathCount={bosses[currentBoss].deathCount}/>
                         </Box>
                     </Box>
                     <ExercisesTable exercisesStatistics={props.exercisesStatistics} />

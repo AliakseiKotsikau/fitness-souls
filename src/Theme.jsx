@@ -14,10 +14,13 @@ const DEFAULT_THEME = createTheme({
         main: '#A28354',
         light: '#cab28d'
     },
+    info: {
+      main: '#E0E0E0'
+    }
   },
   typography: {
     fontSize: 16,
-  }
+  },
 });
 
 export default DEFAULT_THEME;

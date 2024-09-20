@@ -18,6 +18,9 @@ const Chart = props => {
             stroke: theme.palette.primary.main,
             fontWeight: 1
           },
+          [`.MuiBarLabel-root`]: {
+            fill: theme.palette.common.black
+          },
           [`.${axisClasses.root}`]: {
             [`.${axisClasses.tick}, .${axisClasses.line}`]: {
               stroke: theme.palette.primary.main,
@@ -32,10 +35,9 @@ const Chart = props => {
         xAxis={[{
           tickMinStep: 1,
           colorMap: {
-            type: 'continuous',
-            min: 5,
-            max: 12,
-            color: ['green', 'red'],
+            type: 'piecewise',
+            thresholds: [4, 7, 10],
+            colors: ['green', 'yellow', 'orange', 'red'],
           }
         }]}
         series={[{ dataKey: 'deathCount' }]}
