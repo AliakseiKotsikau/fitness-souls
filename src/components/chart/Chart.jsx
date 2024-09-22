@@ -5,9 +5,16 @@ import { axisClasses } from '@mui/x-charts/ChartsAxis'
 const Chart = props => {
 
   function mapBossesDeathsToArray(bossesMap) {
-    return Object.keys(bossesMap)
-        .map(key => ({ 'enemy': key, 'deathCount': +bossesMap[key].deathCount, 'orderNumber': +bossesMap[key].orderNumber }))
-        .sort((a, b) => a.orderNumber - b.orderNumber);
+    return Object.entries(bossesMap)
+        .sort((a, b) => {
+          // First, compare by beatenNumber (descending)
+          if (b[1].beatenNumber !== a[1].beatenNumber) {
+            return b[1].beatenNumber - a[1].beatenNumber;
+          }
+          // If beatenNumber is the same, compare by orderNumber (ascending)
+          return a[1].orderNumber - b[1].orderNumber;
+        })
+        .map(([key, value]) => ({ 'enemy': key, 'deathCount': +value.deathCount}));
   }
 
   return (

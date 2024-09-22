@@ -40,8 +40,11 @@ const StatsTabs = props => {
         return Object.values(bosses).map(bossStat => +bossStat.deathCount).reduce((partalSum, deathCount) => partalSum + deathCount, 0);
     }
 
-    const filterBeatenBosses = (bosses) => {
-        return Object.keys(bosses).filter(bossName => !bosses[bossName].beaten);
+    const getUnbeatenBossesSorted = (bosses) => {
+        return Object.entries(bosses)
+            .filter(([_, boss]) => !boss.beaten)
+            .sort((a, b) => a[1].orderNumber - b[1].orderNumber)
+            .map(([bossName]) => bossName);
     }
 
     return (
@@ -61,14 +64,14 @@ const StatsTabs = props => {
                 </Box>
 
                 <StyledTabPanel value={0} textColor="primary">
-                    <Box sx={{ height: '20rem'}}>
+                    <Box sx={{ height: '20rem' }}>
                         <Box sx={{ width: '70rem', height: '6rem', textAlign: 'center', fontSize: '50px' }}>
                             Total number of deaths: {totalNumberOfDeaths()}
                         </Box>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <DeathStatsBox onClick={props.onHandleWorldDeath} numberOfDeathsText={'World: ' + props.worldDeathCount} />
                             <DeathStatsBox onClick={props.onHandleBossDeath} numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()} />
-                            <SingleBossInfo bosses={filterBeatenBosses(bosses)} deathCount={bosses[currentBoss].deathCount}/>
+                            <SingleBossInfo bosses={getUnbeatenBossesSorted(bosses)} deathCount={bosses[currentBoss].deathCount} onHandleBossKill={props.onHandleBossKill} />
                         </Box>
                     </Box>
                     <ExercisesTable exercisesStatistics={props.exercisesStatistics} />

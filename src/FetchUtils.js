@@ -3,6 +3,7 @@ const GET_STATISTICS_URL = BASE_URL + process.env.REACT_APP_GET_STATISTICS_URL;
 const UPDATE_WORLD_DEATH_COUNT_URL = BASE_URL + process.env.REACT_APP_UPDATE_WORLD_DEATH_COUNT_URL;
 const UPDATE_BOSS_DEATH_COUNT_URL = BASE_URL + process.env.REACT_APP_UPDATE_BOSS_DEATH_COUNT_URL;
 const UPDATE_CURRENT_BOSS_URL = BASE_URL + process.env.REACT_APP_UPDATE_CURRENT_BOSS_URL;
+const KILL_BOSS_URL = BASE_URL + process.env.REACT_APP_KILL_BOSS_URL;
 const UPDATE_EXERCISE_STATS_URL = BASE_URL + process.env.REACT_APP_UPDATE_EXERCISE_STATS_URL;
 
 function processResponse(response) {
@@ -47,4 +48,10 @@ export const updateExerciseStatistics = async (user, game, exercise, quantity) =
   let body = {"user": user, "game": game, "exercise": exercise, "quantity": quantity};
 
   return postRequest(UPDATE_EXERCISE_STATS_URL, body);
+};
+
+export const killBoss = async (user, game, boss) => {
+  let body = {"user": user, "game": game, "boss": boss};
+
+  return postRequest(KILL_BOSS_URL, body);
 };

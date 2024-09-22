@@ -4,7 +4,7 @@ export const fitnessSoulsSlice = createSlice({
     name: 'deathButtonClicked',
     initialState: {
         user: 'kotsial',
-        game: 'DarkSouls1',
+        game: 'DarkSouls2',
         deathButtonClicked: false,
         wheelSpins: false,
         limitOfExercisesReached: false,
@@ -31,6 +31,9 @@ export const fitnessSoulsSlice = createSlice({
         changeCurrentBoss: (state, action) => {
             state.currentBoss = action.payload
         },
+        bossBeaten: (state, action) => {
+            state.bosses[action.payload].beaten = true;
+        },
         addRepsToExercise: (state, action) => {
             state.exerciseStats[action.payload.exercise].quantity = +state.exerciseStats[action.payload.exercise].quantity + +action.payload.quantity;
         },
@@ -45,6 +48,6 @@ export const fitnessSoulsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {worldDeathButtonClick, bossDeathButtonClick, wheelSpinned, limitOfExercisesReached, changeCurrentBoss, addRepsToExercise, setInitialData} = fitnessSoulsSlice.actions
+export const {worldDeathButtonClick, bossDeathButtonClick, wheelSpinned, limitOfExercisesReached, changeCurrentBoss, addRepsToExercise, setInitialData, bossBeaten} = fitnessSoulsSlice.actions
 
 export default fitnessSoulsSlice.reducer

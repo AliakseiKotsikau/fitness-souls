@@ -5,10 +5,11 @@ import DEFAULT_THEME from './Theme';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
-import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount, updateExerciseStatistics } from "./FetchUtils";
+import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount, updateExerciseStatistics, killBoss } from "./FetchUtils";
 import { useSelector, useDispatch } from 'react-redux'
-import { worldDeathButtonClick, bossDeathButtonClick, addRepsToExercise, setInitialData } from './slices/fitnessSoulsSlice';
+import { worldDeathButtonClick, bossDeathButtonClick, addRepsToExercise, setInitialData, bossBeaten } from './slices/fitnessSoulsSlice';
 import DefaultAppBar from "./components/appBar/DefaultAppBar";
+import ExerciseSelectionTable from './components/exerciseSelectionTable/ExerciseSelectionTable';
 
 
 // TODO remove double call of service, it seems that APP is rendered twice
@@ -52,6 +53,15 @@ function App() {
     dispatch(addRepsToExercise({ "exercise": exercise, "quantity": quantity }));
   }
 
+  function onHandleBossKill() {
+    if(currentBoss === null || currentBoss === undefined) {
+      return;
+    }
+
+    killBoss(user, game, currentBoss);
+    dispatch(bossBeaten(currentBoss));
+  }
+
   useEffect(() => {
     // is used to load entire statistics only on first app render
     if (isFirstRender.current) {
@@ -65,10 +75,12 @@ function App() {
     <div className="App">
       <ThemeProvider theme={DEFAULT_THEME}>
         <DefaultAppBar />
-        <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-between', marginTop: '80px'}}>
+        <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-around', marginTop: '80px'}}>
           {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />}
+          {/* {loaded && <ExerciseSelectionTable exercises={Object.keys(userData.exerciseStats)}/>} */}
+          <Box sx={{ width: '20px'}}></Box>
           {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
-            onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} />}
+            onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} onHandleBossKill={onHandleBossKill}/>}
         </Box>
       </ThemeProvider>
     </div>

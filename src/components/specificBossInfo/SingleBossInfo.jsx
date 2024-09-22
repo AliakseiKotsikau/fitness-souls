@@ -10,7 +10,7 @@ const SingleBossInfo = props => {
             <BossSelect bosses={props.bosses} />
             <Box sx={{ width: '20rem', textAlign: 'center', marginTop: '1.5rem', fontSize: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', alignContent: 'space-between' }}>
                 Deaths: {props.deathCount}
-                <SmallColorButton variant="contained" onClick={props.onClick}>
+                <SmallColorButton variant="contained" onClick={props.onHandleBossKill}>
                     Victory
                 </SmallColorButton>
             </Box>
