@@ -7,7 +7,7 @@ import { ThemeProvider } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
 import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount, updateExerciseStatistics, killBoss } from "./FetchUtils";
 import { useSelector, useDispatch } from 'react-redux'
-import { worldDeathButtonClick, bossDeathButtonClick, addRepsToExercise, setInitialData, bossBeaten } from './slices/fitnessSoulsSlice';
+import { worldDeathButtonClick, bossDeathButtonClick, addRepsToExercise, setInitialData, bossBeaten, gameChanged } from './slices/fitnessSoulsSlice';
 import DefaultAppBar from "./components/appBar/DefaultAppBar";
 import ExerciseSelectionTable from './components/exerciseSelectionTable/ExerciseSelectionTable';
 
@@ -25,14 +25,20 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
-  const getUserStatistics = async () => {
-    let response = await fetchUserStatisticsForGame(user, game);
-    let jsonData = JSON.parse(response);
-    setUserData(jsonData);
-    setWorldDeathCount(+jsonData.worldDeathCount);
+  var loading = false;
 
-    dispatch(setInitialData(jsonData));
-    setLoaded(true);
+  const getUserStatistics = async () => {
+    if (game) {
+      loading = true;
+      let response = await fetchUserStatisticsForGame(user, game);
+      let jsonData = JSON.parse(response);
+      setUserData(jsonData);
+      setWorldDeathCount(+jsonData.worldDeathCount);
+
+      dispatch(setInitialData(jsonData));
+      setLoaded(true);
+      loading = false;
+    }
   }
 
   function onHandleWorldDeath() {
@@ -54,7 +60,7 @@ function App() {
   }
 
   function onHandleBossKill() {
-    if(currentBoss === null || currentBoss === undefined) {
+    if (currentBoss === null || currentBoss === undefined) {
       return;
     }
 
@@ -62,25 +68,29 @@ function App() {
     dispatch(bossBeaten(currentBoss));
   }
 
+  function onGameChange(newGame) {
+    dispatch(gameChanged(newGame));
+    setLoaded(false);
+  }
+
   useEffect(() => {
-    // is used to load entire statistics only on first app render
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
+    if (!loading) {
       getUserStatistics();
     }
-  }, []);
+  }, [game]);
+
 
   return (
 
     <div className="App">
       <ThemeProvider theme={DEFAULT_THEME}>
-        <DefaultAppBar />
-        <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-around', marginTop: '80px'}}>
+        <DefaultAppBar onGameChange={onGameChange} />
+        <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-around', marginTop: '80px' }}>
           {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />}
           {/* {loaded && <ExerciseSelectionTable exercises={Object.keys(userData.exerciseStats)}/>} */}
-          <Box sx={{ width: '20px'}}></Box>
+          <Box sx={{ width: '20px' }}></Box>
           {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
-            onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} onHandleBossKill={onHandleBossKill}/>}
+            onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} onHandleBossKill={onHandleBossKill} />}
         </Box>
       </ThemeProvider>
     </div>

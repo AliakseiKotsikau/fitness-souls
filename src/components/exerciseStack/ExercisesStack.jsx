@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Stack from '@mui/material/Stack';
 import ExerciseItem from './../exerciseItem/ExerciseItem'
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 const ExerciseStack = props => {
     const [exercises, setExercises] = useState([])
@@ -12,17 +15,26 @@ const ExerciseStack = props => {
     })
 
     return (
-        <Stack
-            direction="column-reverse"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={-3}
-        >
-            {exercises.map((exercise, i) => {
-                return <ExerciseItem text={exercise} onExerciseItemClick={props.onExerciseItemClick} key={i} />
-            })
-            }
-        </Stack>
+        <Box sx={{ width: '100%' }}>
+            <Grid  container spacing={2}>
+                {exercises.map((exercise, i) =>
+                (<Grid item key={i}>
+                    <ExerciseItem text={exercise} onExerciseItemClick={props.onExerciseItemClick} key={i}>exercise</ExerciseItem>
+                </Grid>)
+                )}
+            </Grid>
+        </Box>
+        // <Stack
+        //     direction="column-reverse"
+        //     justifyContent="flex-start"
+        //     alignItems="center"
+        //     spacing={-3}
+        // >
+        //     {exercises.map((exercise, i) => {
+        //         return <ExerciseItem text={exercise} onExerciseItemClick={props.onExerciseItemClick} key={i} />
+        //     })
+        //     }
+        // </Stack>
     )
 }
 

@@ -1,13 +1,21 @@
 import React from 'react'
 import './exerciseItem.css'
 import ColorButton from '../colorButton/ColorButton'
+import { styled } from '@mui/material/styles';
+
+
+const SingleExerciseToDo = styled(ColorButton)(({ theme }) => ({
+  width: '10rem',
+  height: '4rem',
+  fontSize: '18px'
+}));
 
 const ExerciseItem = props => {
 
   return (
-    <ColorButton className='exerciseItem' variant="contained" onClick={() => props.onExerciseItemClick(props.text)}>
+    <SingleExerciseToDo className='exerciseItem' variant="contained" onClick={() => props.onExerciseItemClick(props.text)}>
       {props.text}
-    </ColorButton>
+    </SingleExerciseToDo>
   )
 }
 

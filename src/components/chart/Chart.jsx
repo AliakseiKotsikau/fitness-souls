@@ -9,9 +9,9 @@ const Chart = props => {
         .sort((a, b) => {
           // First, compare by beatenNumber (descending)
           if (b[1].beatenNumber !== a[1].beatenNumber) {
-            return b[1].beatenNumber - a[1].beatenNumber;
+            return a[1].beatenNumber - b[1].beatenNumber;
           }
-          // If beatenNumber is the same, compare by orderNumber (ascending)
+          // If beatenNumber is the same, compare by orderNumber (descending)
           return a[1].orderNumber - b[1].orderNumber;
         })
         .map(([key, value]) => ({ 'enemy': key, 'deathCount': +value.deathCount}));

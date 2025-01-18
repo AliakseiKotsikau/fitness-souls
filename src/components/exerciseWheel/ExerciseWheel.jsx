@@ -81,7 +81,8 @@ const ExerciseWheel = props => {
   }
 
   function onExerciseItemClick(exerciseName) {
-    exercisesToDo.shift();
+    const exerciseItemIndex = exercisesToDo.indexOf(exerciseName);
+    exercisesToDo.splice(exerciseItemIndex, 1);
     setExercisesToDo([...exercisesToDo]);
 
     if (exercisesToDo.length < LIMIT_OF_EXERCISES) {
