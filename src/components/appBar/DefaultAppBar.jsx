@@ -7,7 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Games } from '../../slices/fitnessSoulsSlice';
 
- const DefaultAppBar = props => {
+const DefaultAppBar = props => {
+
+  const highlightSelectedGame = (game) => {
+    return game === props.selectedGame ? { backgroundColor: "secondary.light", color: 'primary.main' } : {};
+  }
 
   return (
     <Box >
@@ -22,8 +26,8 @@ import { Games } from '../../slices/fitnessSoulsSlice';
           >
             <MenuIcon />
           </IconButton>
-          <Button color="secondary" onClick={() => props.onGameChange(Games.DarkSouls1)}>DS1</Button>
-          <Button color="secondary" onClick={() => props.onGameChange(Games.DarkSouls2)}>DS2</Button>
+          <Button color="secondary" sx={highlightSelectedGame(Games.DarkSouls1)} onClick={() => props.onGameChange(Games.DarkSouls1)}>DS1</Button>
+          <Button color="secondary" sx={highlightSelectedGame(Games.DarkSouls2)} onClick={() => props.onGameChange(Games.DarkSouls2)}>DS2</Button>
         </Toolbar>
       </AppBar>
     </Box>

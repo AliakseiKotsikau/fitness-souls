@@ -5,7 +5,7 @@ import ExerciseStack from './../exerciseStack/ExercisesStack'
 import { useTheme } from '@mui/material/styles';
 import ExerciseLimitAlert from '../exerciseLimitAlert/ExerciseLimitAlert';
 import { useSelector, useDispatch } from 'react-redux'
-import { wheelSpinned } from '../../slices/fitnessSoulsSlice';
+import { exerciseSelected } from '../../slices/fitnessSoulsSlice';
 
 const LIMIT_OF_EXERCISES = 5;
 
@@ -32,7 +32,7 @@ const ExerciseWheel = props => {
   function handleSpinClick() {
     if (limitOfExercisesReached) {
       setShowMaxExercisesAlert(true);
-      dispatch(wheelSpinned());
+      dispatch(exerciseSelected());
       return;
     }
 
@@ -66,7 +66,7 @@ const ExerciseWheel = props => {
 
   function onStopSpin() {
     setMustSpin(false);
-    dispatch(wheelSpinned());
+    dispatch(exerciseSelected());
 
     if (limitOfExercisesReached) {
       return;

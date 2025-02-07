@@ -8,8 +8,8 @@ const columns = [
     field: 'id',
     headerName: 'Exercise',
     headerClassName: 'table-header',
-    flex: 1,
-    resizable: false, 
+    flex: 3,
+    resizable: false,
     editable: false,
   },
   {
@@ -17,7 +17,7 @@ const columns = [
     headerName: 'Min',
     type: 'number',
     headerClassName: 'table-header',
-    width: 150,
+    flex: 1,
     resizable: false,
     editable: true,
   },
@@ -26,13 +26,13 @@ const columns = [
     headerName: 'Max',
     type: 'number',
     headerClassName: 'table-header',
-    width: 150,
+    flex: 1,
     resizable: false,
     editable: true,
   },
 ];
 
-const mapExerciesToRows = (exercises) =>  {
+const mapExerciesToRows = (exercises) => {
   let ex = exercises.map((exercise) => ({
     'id': exercise,
     'min': 10,
@@ -46,11 +46,16 @@ const ExerciseSelectionTable = props => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ height: 500, width: '35%', '& .table-header': {
-          backgroundColor: theme.palette.secondary.main,
-        }}}>
+    <Box sx={{
+      width: '80%',
+      maxWidth: '100px',
+      minWidth:'600px',
+      '& .table-header': {
+        backgroundColor: theme.palette.secondary.main,
+      }
+    }}>
       <DataGrid
-        rowHeight={40}
+        rowHeight={50}
         rows={mapExerciesToRows(props.exercises)}
         columns={columns}
         initialState={{
@@ -65,10 +70,10 @@ const ExerciseSelectionTable = props => {
         disableRowSelectionOnClick
         sx={{
           border: 0,
-          '.MuiDataGrid-columnHeaderTitleContainer' :{
+          '.MuiDataGrid-columnHeaderTitleContainer': {
             backgroundColor: theme.palette.secondary.main,
           },
-          '.MuiSvgIcon-root' :{
+          '.MuiSvgIcon-root': {
             fillColor: theme.palette.common.white,
           },
         }}

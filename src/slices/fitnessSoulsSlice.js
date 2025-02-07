@@ -22,7 +22,7 @@ export const fitnessSoulsSlice = createSlice({
             state.deathButtonClicked = true;
             state.bosses[action.payload].deathCount = +state.bosses[action.payload].deathCount + 1;
         },
-        wheelSpinned: state => {
+        exerciseSelected: state => {
             state.deathButtonClicked = false
         },
         limitOfExercisesReached: state => {
@@ -51,7 +51,7 @@ export const fitnessSoulsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {worldDeathButtonClick, bossDeathButtonClick, wheelSpinned, limitOfExercisesReached, changeCurrentBoss, addRepsToExercise, setInitialData, bossBeaten, gameChanged} = fitnessSoulsSlice.actions
+export const {worldDeathButtonClick, bossDeathButtonClick, exerciseSelected, limitOfExercisesReached, changeCurrentBoss, addRepsToExercise, setInitialData, bossBeaten, gameChanged} = fitnessSoulsSlice.actions
 
 export const Games = {DarkSouls1: "DarkSouls1", DarkSouls2: "DarkSouls2", DarkSouls3: "DarkSouls3", Sekiro: "Sekiro", EldenRing: "EldenRing"}
 

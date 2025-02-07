@@ -9,7 +9,7 @@ import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount
 import { useSelector, useDispatch } from 'react-redux'
 import { worldDeathButtonClick, bossDeathButtonClick, addRepsToExercise, setInitialData, bossBeaten, gameChanged } from './slices/fitnessSoulsSlice';
 import DefaultAppBar from "./components/appBar/DefaultAppBar";
-import ExerciseSelectionTable from './components/exerciseSelectionTable/ExerciseSelectionTable';
+import ExerciseTableAndCards from './components/exerciseTableAndCards/ExerciseTableAndCards';
 
 
 // TODO remove double call of service, it seems that APP is rendered twice
@@ -69,8 +69,10 @@ function App() {
   }
 
   function onGameChange(newGame) {
-    dispatch(gameChanged(newGame));
-    setLoaded(false);
+    if (newGame !== game) {
+      dispatch(gameChanged(newGame));
+      setLoaded(false);
+    }
   }
 
   useEffect(() => {
@@ -84,10 +86,10 @@ function App() {
 
     <div className="App">
       <ThemeProvider theme={DEFAULT_THEME}>
-        <DefaultAppBar onGameChange={onGameChange} />
+        <DefaultAppBar selectedGame={game} onGameChange={onGameChange} />
         <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-around', marginTop: '80px' }}>
-          {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />}
-          {/* {loaded && <ExerciseSelectionTable exercises={Object.keys(userData.exerciseStats)}/>} */}
+          {/* {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />} */}
+          {loaded && <ExerciseTableAndCards exercises={userData.exercises}/>}
           <Box sx={{ width: '20px' }}></Box>
           {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
             onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} onHandleBossKill={onHandleBossKill} />}
