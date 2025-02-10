@@ -1,9 +1,19 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, styled } from '@mui/material/styles';
+
 
 const columns = [
+  {
+    field: 'active',
+    headerName: 'Active',
+    headerClassName: 'table-header',
+    type: 'boolean',
+    flex: 1,
+    resizable: false,
+    editable: true,
+  },
   {
     field: 'id',
     headerName: 'Exercise',
@@ -33,10 +43,11 @@ const columns = [
 ];
 
 const mapExerciesToRows = (exercises) => {
-  let ex = exercises.map((exercise) => ({
+  let ex = Object.keys(exercises).map((exercise) => ({
+    'active': exercises[exercise].active,
     'id': exercise,
-    'min': 10,
-    'max': 30,
+    'min': exercises[exercise].min,
+    'max': exercises[exercise].max,
   }));
   console.log(ex)
   return ex;
@@ -66,8 +77,8 @@ const ExerciseSelectionTable = props => {
           },
         }}
         pageSizeOptions={[10]}
-        checkboxSelection
         disableRowSelectionOnClick
+        isRowSelect={(params) => props.exercises[params.row.exercise]?.active === true}
         sx={{
           border: 0,
           '.MuiDataGrid-columnHeaderTitleContainer': {
@@ -76,6 +87,19 @@ const ExerciseSelectionTable = props => {
           '.MuiSvgIcon-root': {
             fillColor: theme.palette.common.white,
           },
+          '.MuiDataGrid-editBooleanCell': {
+            color: theme.palette.common.black,
+            backgroundColor: theme.palette.common.black,
+          },
+          '.MuiDataGrid-editInputCell': {
+            color: theme.palette.common.white,
+            backgroundColor: theme.palette.common.black,
+          },
+          '.MuiDataGrid-booleanCell': {
+            color: theme.palette.common.black,
+            backgroundColor: theme.palette.common.black,
+          },
+
         }}
       />
     </Box>

@@ -72,7 +72,7 @@ const ExerciseTableAndCards = props => {
             <Box sx={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', width: '1', margin: '0 auto',
             }}>
-                <ExerciseSelectionTable exercises={Object.keys(props.exercises)} sx={{ marginBottom: '20px' }} />
+                <ExerciseSelectionTable exercises={props.exercises}/>
                 <Box sx={{
                     width: '100%', // Ensure ExerciseStack takes full width of its parent
                     marginTop: '150px',
