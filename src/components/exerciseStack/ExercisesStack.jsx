@@ -6,20 +6,20 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 const ExerciseStack = props => {
-    const [exercises, setExercises] = useState([])
+    // const [exercises, setExercises] = useState([])
 
-    useEffect(() => {
-        if (props.exercises) {
-            setExercises(props.exercises)
-        }
-    })
+    // useEffect(() => {
+    //     if (props.exercises) {
+    //         setExercises(props.exercises)
+    //     }
+    // })
 
     return (
         <Box sx={{ width: '100%' }}>
             <Grid  container spacing={2}>
-                {exercises.map((exercise, i) =>
+                {props.exerciseCards.map((exerciseCard, i) =>
                 (<Grid item key={i}>
-                    <ExerciseItem text={exercise} onExerciseItemClick={props.onExerciseItemClick} key={i}>exercise</ExerciseItem>
+                    <ExerciseItem exerciseInfo={exerciseCard} onExerciseItemClick={props.onExerciseItemClick} key={i}>exercise</ExerciseItem>
                 </Grid>)
                 )}
             </Grid>

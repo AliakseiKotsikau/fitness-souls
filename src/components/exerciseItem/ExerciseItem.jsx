@@ -13,8 +13,8 @@ const SingleExerciseToDo = styled(ColorButton)(({ theme }) => ({
 const ExerciseItem = props => {
 
   return (
-    <SingleExerciseToDo className='exerciseItem' variant="contained" onClick={() => props.onExerciseItemClick(props.text)}>
-      {props.text}
+    <SingleExerciseToDo className='exerciseItem' variant="contained" onClick={() => props.onExerciseItemClick(props.exerciseInfo.exercise)}>
+      {props.exerciseInfo.exercise + " " + props.exerciseInfo.reps}
     </SingleExerciseToDo>
   )
 }

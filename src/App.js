@@ -89,7 +89,7 @@ function App() {
         <DefaultAppBar selectedGame={game} onGameChange={onGameChange} />
         <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-around', marginTop: '80px' }}>
           {/* {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />} */}
-          {loaded && <ExerciseTableAndCards exercises={userData.exercises}/>}
+          {loaded && <ExerciseTableAndCards exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate}/>}
           <Box sx={{ width: '20px' }}></Box>
           {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
             onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} onHandleBossKill={onHandleBossKill} />}

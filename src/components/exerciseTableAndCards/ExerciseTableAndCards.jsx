@@ -18,38 +18,60 @@ const ExerciseTableAndCards = props => {
     const [showMaxExercisesAlert, setShowMaxExercisesAlert] = useState(false);
     const [limitOfExercisesReached, setLimitOfExercisesReached] = useState(false);
     const [randomizedExerciseIndex, setRandomizedExerciseIndex] = useState(0);
-    const [exercises, setExercises] = useState(mapExercisesToArray);
 
 
-    function mapExercisesToArray ()  {
-        let userExercises = props.exercises;
-        let exercisesArray = Object.keys(userExercises).map(key => ({ 'option': key, 'optionSize': +userExercises[key].weight }));
-        return arrayShuffle(exercisesArray);
-    }
+    // function mapExercisesToArray() {
+    //     let userExercises = props.exercises;
+    //     let exercisesArray = Object.keys(userExercises).map(key => ({ 'option': key, 'optionSize': +userExercises[key].weight }));
+    //     return arrayShuffle(exercisesArray);
+    // }
 
     const chooseRandomExercise = () => {
+        
+        dispatch(exerciseSelected());
         if (limitOfExercisesReached) {
             setShowMaxExercisesAlert(true);
-            dispatch(exerciseSelected());
             return;
         }
 
-        const indexOfRandomizedExercise = getRandomElement(exercises);
-        setRandomizedExerciseIndex(indexOfRandomizedExercise);
+        const randomizedExercise = getRandomElement(Object.keys(props.exercises));
+        const numberOfReps = getRandomNumberFromRange(+props.exercises[randomizedExercise].min, +props.exercises[randomizedExercise].max);
+
+        //setRandomizedExerciseIndex(indexOfRandomizedExercise);
+
+        const exerciseCard = { "exercise": randomizedExercise, "reps": numberOfReps };
+
+        exercisesToDo.push(exerciseCard);
+        setExercisesToDo(exercisesToDo);
+
+        if (exercisesToDo.length === LIMIT_OF_EXERCISES) {
+            setLimitOfExercisesReached(true);
+        }
     }
 
-    function getRandomElement(arr) {
-        if (!Array.isArray(arr) || arr.length === 0) {
-            throw new Error("Input must be a non-empty array.");
+    const getRandomElement = (array) => {
+        if (array.length === 0) {
+            throw new Error("Array is empty");
         }
-        return Math.floor(Math.random() * arr.length);
+        const randomIndex = Math.floor(Math.random() * array.length);
+        return array[randomIndex];
+    }
+
+    function getRandomNumberFromRange(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
 
     const onExerciseItemClick = (exerciseName) => {
         const exerciseItemIndex = exercisesToDo.indexOf(exerciseName);
-        exercisesToDo.splice(exerciseItemIndex, 1);
+        const finishedExercise =  exercisesToDo.splice(exerciseItemIndex, 1);
         setExercisesToDo([...exercisesToDo]);
+
+        if (exercisesToDo.length < LIMIT_OF_EXERCISES) {
+            setLimitOfExercisesReached(false);
+        }
+
+        props.handleExerciseStatisticsUpdate(props.exercises[finishedExercise[0].exercise].type, finishedExercise[0].reps);
     }
 
     useEffect(() => {
@@ -72,12 +94,12 @@ const ExerciseTableAndCards = props => {
             <Box sx={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', width: '1', margin: '0 auto',
             }}>
-                <ExerciseSelectionTable exercises={props.exercises}/>
+                <ExerciseSelectionTable exercises={props.exercises} />
                 <Box sx={{
                     width: '100%', // Ensure ExerciseStack takes full width of its parent
-                    marginTop: '150px',
+                    marginTop: '20px',
                 }}>
-                    <ExerciseStack exercises={[...exercisesToDo].reverse()} onExerciseItemClick={onExerciseItemClick} />
+                    <ExerciseStack exerciseCards={[...exercisesToDo].reverse()} onExerciseItemClick={onExerciseItemClick} />
                 </Box>
             </Box>
         </>

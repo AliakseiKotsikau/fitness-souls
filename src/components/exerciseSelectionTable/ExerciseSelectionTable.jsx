@@ -49,7 +49,6 @@ const mapExerciesToRows = (exercises) => {
     'min': exercises[exercise].min,
     'max': exercises[exercise].max,
   }));
-  console.log(ex)
   return ex;
 }
 
