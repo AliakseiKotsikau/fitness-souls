@@ -19,13 +19,6 @@ const ExerciseTableAndCards = props => {
     const [limitOfExercisesReached, setLimitOfExercisesReached] = useState(false);
     const [randomizedExerciseIndex, setRandomizedExerciseIndex] = useState(0);
 
-
-    // function mapExercisesToArray() {
-    //     let userExercises = props.exercises;
-    //     let exercisesArray = Object.keys(userExercises).map(key => ({ 'option': key, 'optionSize': +userExercises[key].weight }));
-    //     return arrayShuffle(exercisesArray);
-    // }
-
     const chooseRandomExercise = () => {
         
         dispatch(exerciseSelected());
@@ -35,7 +28,7 @@ const ExerciseTableAndCards = props => {
         }
 
         const randomizedExercise = getRandomElement(Object.keys(props.exercises));
-        const numberOfReps = getRandomNumberFromRange(+props.exercises[randomizedExercise].min, +props.exercises[randomizedExercise].max);
+        const numberOfReps = getRandomNumberFromRange(+props.exercises[randomizedExercise].minReps, +props.exercises[randomizedExercise].maxReps);
 
         //setRandomizedExerciseIndex(indexOfRandomizedExercise);
 
@@ -94,7 +87,7 @@ const ExerciseTableAndCards = props => {
             <Box sx={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', width: '1', margin: '0 auto',
             }}>
-                <ExerciseSelectionTable exercises={props.exercises} />
+                <ExerciseSelectionTable exercises={props.exercises} onExerciseUpdate={props.onExerciseUpdate}/>
                 <Box sx={{
                     width: '100%', // Ensure ExerciseStack takes full width of its parent
                     marginTop: '20px',

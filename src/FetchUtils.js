@@ -5,6 +5,7 @@ const UPDATE_BOSS_DEATH_COUNT_URL = BASE_URL + process.env.REACT_APP_UPDATE_BOSS
 const UPDATE_CURRENT_BOSS_URL = BASE_URL + process.env.REACT_APP_UPDATE_CURRENT_BOSS_URL;
 const KILL_BOSS_URL = BASE_URL + process.env.REACT_APP_KILL_BOSS_URL;
 const UPDATE_EXERCISE_STATS_URL = BASE_URL + process.env.REACT_APP_UPDATE_EXERCISE_STATS_URL;
+const UPDATE_EXERCISE_URL = BASE_URL + process.env.REACT_APP_UPDATE_EXERCISE_URL;
 
 function processResponse(response) {
   if (!response.ok) {
@@ -54,4 +55,11 @@ export const killBoss = async (user, game, boss) => {
   let body = {"user": user, "game": game, "boss": boss};
 
   return postRequest(KILL_BOSS_URL, body);
+};
+
+
+export const updateExercise = async (user, game, updatedExercise) => {
+  let body = {"user": user, "game": game, ...updatedExercise};
+
+  return postRequest(UPDATE_EXERCISE_URL, body);
 };

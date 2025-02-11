@@ -23,7 +23,7 @@ const columns = [
     editable: false,
   },
   {
-    field: 'min',
+    field: 'minReps',
     headerName: 'Min',
     type: 'number',
     headerClassName: 'table-header',
@@ -32,7 +32,7 @@ const columns = [
     editable: true,
   },
   {
-    field: 'max',
+    field: 'maxReps',
     headerName: 'Max',
     type: 'number',
     headerClassName: 'table-header',
@@ -46,8 +46,8 @@ const mapExerciesToRows = (exercises) => {
   let ex = Object.keys(exercises).map((exercise) => ({
     'active': exercises[exercise].active,
     'id': exercise,
-    'min': exercises[exercise].min,
-    'max': exercises[exercise].max,
+    'minReps': +exercises[exercise].minReps,
+    'maxReps': +exercises[exercise].maxReps,
   }));
   return ex;
 }
@@ -55,11 +55,28 @@ const mapExerciesToRows = (exercises) => {
 const ExerciseSelectionTable = props => {
   const theme = useTheme();
 
+  const updateExercise = (updatedExerciseRow) => {
+    const updatedExercise = {
+      'exercise': updatedExerciseRow.id,
+      'minReps': updatedExerciseRow.minReps,
+      'maxReps': updatedExerciseRow.maxReps,
+      'active': updatedExerciseRow.active,
+    }
+
+    props.onExerciseUpdate(updatedExercise);
+
+    return updatedExerciseRow;
+  }
+
+  const handleProcessRowUpdateError = (error) => {
+    console.error(error.message);
+  }
+
   return (
     <Box sx={{
       width: '80%',
       maxWidth: '100px',
-      minWidth:'600px',
+      minWidth: '600px',
       '& .table-header': {
         backgroundColor: theme.palette.secondary.main,
       }
@@ -78,6 +95,8 @@ const ExerciseSelectionTable = props => {
         pageSizeOptions={[10]}
         disableRowSelectionOnClick
         isRowSelect={(params) => props.exercises[params.row.exercise]?.active === true}
+        processRowUpdate={(updatedRow, originalRow) => updateExercise(updatedRow)}
+        onProcessRowUpdateError={handleProcessRowUpdateError}
         sx={{
           border: 0,
           '.MuiDataGrid-columnHeaderTitleContainer': {

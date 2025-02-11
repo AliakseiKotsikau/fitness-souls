@@ -5,7 +5,7 @@ import DEFAULT_THEME from './Theme';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
-import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount, updateExerciseStatistics, killBoss } from "./FetchUtils";
+import { fetchUserStatisticsForGame, updateWorldDeathCount, updateBossDeathCount, updateExerciseStatistics, killBoss, updateExercise } from "./FetchUtils";
 import { useSelector, useDispatch } from 'react-redux'
 import { worldDeathButtonClick, bossDeathButtonClick, addRepsToExercise, setInitialData, bossBeaten, gameChanged } from './slices/fitnessSoulsSlice';
 import DefaultAppBar from "./components/appBar/DefaultAppBar";
@@ -75,6 +75,11 @@ function App() {
     }
   }
 
+  function onExerciseUpdate(updatedExercise) {
+    console.log(updatedExercise);
+    updateExercise(user, game, updatedExercise);
+  }
+
   useEffect(() => {
     if (!loading) {
       getUserStatistics();
@@ -89,7 +94,7 @@ function App() {
         <DefaultAppBar selectedGame={game} onGameChange={onGameChange} />
         <Box sx={{ width: '1', display: 'flex', justifyContent: 'space-around', marginTop: '80px' }}>
           {/* {loaded && <ExerciseWheel exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} />} */}
-          {loaded && <ExerciseTableAndCards exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate}/>}
+          {loaded && <ExerciseTableAndCards exercises={userData.exercises} handleExerciseStatisticsUpdate={handleExerciseStatisticsUpdate} onExerciseUpdate={onExerciseUpdate}/>}
           <Box sx={{ width: '20px' }}></Box>
           {loaded && <StatsTabs exercisesStatistics={userData.exerciseStats} worldDeathCount={+worldDeathCount}
             onHandleWorldDeath={onHandleWorldDeath} onHandleBossDeath={onHandleBossDeath} onHandleBossKill={onHandleBossKill} />}
