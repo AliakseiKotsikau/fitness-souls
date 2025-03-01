@@ -91,6 +91,9 @@ const ExerciseSelectionTable = props => {
               pageSize: 10,
             },
           },
+          sorting: {
+            sortModel: [{ field: 'id', sort: 'asc' }],
+          },
         }}
         pageSizeOptions={[10]}
         disableRowSelectionOnClick

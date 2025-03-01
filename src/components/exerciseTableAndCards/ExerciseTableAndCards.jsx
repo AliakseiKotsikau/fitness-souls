@@ -27,7 +27,7 @@ const ExerciseTableAndCards = props => {
             return;
         }
 
-        const randomizedExercise = getRandomElement(Object.keys(props.exercises));
+        const randomizedExercise = getRandomElement(getOnlyActiveExercises());
         const numberOfReps = getRandomNumberFromRange(+props.exercises[randomizedExercise].minReps, +props.exercises[randomizedExercise].maxReps);
 
         //setRandomizedExerciseIndex(indexOfRandomizedExercise);
@@ -40,6 +40,11 @@ const ExerciseTableAndCards = props => {
         if (exercisesToDo.length === LIMIT_OF_EXERCISES) {
             setLimitOfExercisesReached(true);
         }
+    }
+
+    const getOnlyActiveExercises = () => {
+        console.log(props.exercises);
+        return Object.keys(props.exercises).filter(key => props.exercises[key].active);
     }
 
     const getRandomElement = (array) => {

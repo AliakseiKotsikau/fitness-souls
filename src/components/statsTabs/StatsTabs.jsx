@@ -47,6 +47,10 @@ const StatsTabs = props => {
             .map(([bossName]) => bossName);
     }
 
+    const getBossDeathCount = () => {
+        return bosses[currentBoss].beaten ? 0: bosses[currentBoss].deathCount;
+    }
+
     return (
         <Box sx={{ typography: 'body1' }}>
             <TabContext value={value}>
@@ -71,7 +75,7 @@ const StatsTabs = props => {
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <DeathStatsBox onClick={props.onHandleWorldDeath} numberOfDeathsText={'World: ' + props.worldDeathCount} />
                             <DeathStatsBox onClick={props.onHandleBossDeath} numberOfDeathsText={'Bosses: ' + numberOfDeathOnBosses()} />
-                            <SingleBossInfo bosses={getUnbeatenBossesSorted(bosses)} deathCount={bosses[currentBoss].deathCount} onHandleBossKill={props.onHandleBossKill} />
+                            <SingleBossInfo bosses={getUnbeatenBossesSorted(bosses)} deathCount={getBossDeathCount()} onHandleBossKill={props.onHandleBossKill} />
                         </Box>
                     </Box>
                     <ExercisesTable exercisesStatistics={props.exercisesStatistics} />
