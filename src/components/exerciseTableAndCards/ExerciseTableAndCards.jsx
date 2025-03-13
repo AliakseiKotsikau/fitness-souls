@@ -20,7 +20,7 @@ const ExerciseTableAndCards = props => {
     const [randomizedExerciseIndex, setRandomizedExerciseIndex] = useState(0);
 
     const chooseRandomExercise = () => {
-        
+
         dispatch(exerciseSelected());
         if (limitOfExercisesReached) {
             setShowMaxExercisesAlert(true);
@@ -43,7 +43,6 @@ const ExerciseTableAndCards = props => {
     }
 
     const getOnlyActiveExercises = () => {
-        console.log(props.exercises);
         return Object.keys(props.exercises).filter(key => props.exercises[key].active);
     }
 
@@ -60,9 +59,11 @@ const ExerciseTableAndCards = props => {
     }
 
 
-    const onExerciseItemClick = (exerciseName) => {
-        const exerciseItemIndex = exercisesToDo.indexOf(exerciseName);
-        const finishedExercise =  exercisesToDo.splice(exerciseItemIndex, 1);
+    const onExerciseItemClick = (exerciseName, exerciseReps) => {
+        const exerciseItemIndex = exercisesToDo.findIndex(item =>
+            item.exercise === exerciseName && item.reps === exerciseReps
+        );
+        const finishedExercise = exercisesToDo.splice(exerciseItemIndex, 1);
         setExercisesToDo([...exercisesToDo]);
 
         if (exercisesToDo.length < LIMIT_OF_EXERCISES) {
@@ -92,7 +93,7 @@ const ExerciseTableAndCards = props => {
             <Box sx={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', width: '1', margin: '0 auto',
             }}>
-                <ExerciseSelectionTable exercises={props.exercises} onExerciseUpdate={props.onExerciseUpdate}/>
+                <ExerciseSelectionTable exercises={props.exercises} onExerciseUpdate={props.onExerciseUpdate} />
                 <Box sx={{
                     width: '100%', // Ensure ExerciseStack takes full width of its parent
                     marginTop: '20px',
