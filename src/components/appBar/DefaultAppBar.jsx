@@ -28,6 +28,7 @@ const DefaultAppBar = props => {
           </IconButton>
           <Button color="secondary" sx={highlightSelectedGame(Games.DarkSouls1)} onClick={() => props.onGameChange(Games.DarkSouls1)}>DS1</Button>
           <Button color="secondary" sx={highlightSelectedGame(Games.DarkSouls2)} onClick={() => props.onGameChange(Games.DarkSouls2)}>DS2</Button>
+          <Button color="secondary" sx={highlightSelectedGame(Games.DarkSouls3)} onClick={() => props.onGameChange(Games.DarkSouls3)}>DS3</Button>
         </Toolbar>
       </AppBar>
     </Box>
